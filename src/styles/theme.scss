@@ -16,7 +16,9 @@ body.cover-image {
 
 header .logo {
 	color: $white;
-	margin: $spacer*5;
+	left: $spacer*5;
+	position: absolute;
+	top: $spacer*5;
 
 	h1 {
 		font-size: 5rem;
@@ -28,5 +30,44 @@ header .logo {
 		font-style: italic;
 		margin-left: $spacer*5;
 		margin-top: -1.5rem;
+	}
+}
+
+header .main-menu {
+	color: $white;
+	position: absolute;
+	right: $spacer*5;
+	top: $spacer*10;
+
+	li {
+		&:hover {
+			background-color: rgba($lightGrey, 0.7);
+		}
+
+		font-size: 1.2rem;
+		font-weight: 500;
+		color: inherit;
+		list-style: none;
+		width: 300px;
+		border: 2px solid $white;
+		border-radius: $spacer;
+		padding: 0;
+		margin-bottom: $spacer;
+		text-align: center;
+
+		a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			padding: $spacer/2;
+			margin: 0;
+			color: inherit;
+			text-decoration: none;
+
+			&:hover {
+				color: $white;
+				text-decoration: none;
+			}
+		}
 	}
 }

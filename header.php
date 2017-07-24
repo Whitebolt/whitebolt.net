@@ -33,5 +33,13 @@
 			<h1>Whitebolt</h1>
 			<p>...let the experts manage your site.</p>
 		</div>
+
+		<?php echo wp_nav_menu(array(
+			'theme_location'  => 'main',
+			'menu_class' => 'main-menu',
+			'echo'            => true,
+			'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+			'depth'           => 0
+		));?>
 	<?php } ?>
 </header>

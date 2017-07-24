@@ -37,9 +37,8 @@ function wb_setup() {
 	add_theme_support( 'post-thumbnails' );
 
 	register_nav_menus( array(
-		'top'    => __( 'Top Menu', 'piy' ),
-		'terms' => __( 'Terms Menu', 'piy' ),
-		'social' => __( 'Social Menu', 'piy' )
+		'main'    => __( 'Main Menu', 'whitebolt' ),
+		'social' => __( 'Social Menu', 'whitebolt' )
 	) );
 }
 add_action( 'after_setup_theme', 'wb_setup' );

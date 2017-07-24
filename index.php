@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-	<main>
+	<!--main>
 		<?php $hide_title = types_render_field( 'hide-title', array()); ?>
 		<?php $count = 0; ?>
 		<?php while ( have_posts() ) : the_post(); $count++;?>
@@ -9,5 +9,5 @@
 				<?php the_content(); ?>
 			</article>
 		<?php endwhile; ?>
-	</main>
+	</main-->
 <?php get_footer();
