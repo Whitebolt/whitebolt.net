@@ -26,7 +26,7 @@
 	if (!empty($body_style)) $body_style = ' style="' . $body_style . '"';
 ?>
 
-<body <?php body_class($body_class); ?><?php echo $body_style; ?>>
+<body app="wb" <?php body_class($body_class); ?><?php echo $body_style; ?>>
 <header>
 	<?php if (is_home() || is_front_page()) { ?>
 		<div class="logo">

@@ -13,14 +13,18 @@ function wb_enqueue() {
 	wb_register_lib('jquery', '/jquery/dist/jquery', '3.1.1');
 	wb_register_lib('what-input', '/what-input/dist/what-input', '4.0.6');
 	wb_register_lib('foundation', '/foundation-sites/dist/js/foundation', '6.3.1', array('what-input'));
-	wb_register_script('piy', '/index', array('jquery', 'foundation'));
+	wb_register_lib('angular', '/angular/angular', '1.6.5', array('jquery'));
+	wb_register_lib('angular-bolt', '/angular-bolt/index', '0.0.1', array('angular'));
+	wb_register_script('wb', '/index', array('jquery', 'foundation', 'angular', 'angular-bolt'));
 
-	wb_enqueuer('style', array('foundation', 'font-awesome', 'featherlight', 'featherlight-gallery', 'main'));
+	wb_enqueuer('style', array('foundation', 'font-awesome', 'main'));
 	wb_enqueuer('script', array(
 		'jquery',
 		'what-input',
 		'foundation',
-		'piy'
+		'angular',
+		'angular-bolt',
+		'wb'
 	));
 }
 add_action( 'wp_enqueue_scripts', 'wb_enqueue' );
