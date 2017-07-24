@@ -1,1 +1,32 @@
 @import "variables";
+
+body, html {
+	font-size: 1rem;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+body.cover-image {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+header .logo {
+	color: $white;
+	margin: $spacer*5;
+
+	h1 {
+		font-size: 5rem;
+	}
+
+	p {
+		color: $lightGrey;
+		font-size: 1.5rem;
+		font-style: italic;
+		margin-left: $spacer*5;
+		margin-top: -1.5rem;
+	}
+}

@@ -14,8 +14,24 @@
 	<?php if (get_theme_mod( 'google_analytics' )) include_once("inc/analyticstracking.php"); ?>
 	<?php wp_head(); ?>
 </head>
+<?php
+	$image_url  = types_render_field( 'background-image', array('url' => true));
+	$body_class = array();
+	$body_style = '';
+	if (!empty($image_url)) {
+		$body_style .= 'background-image:url(\'' . $image_url . '\');';
+		array_push($body_class, 'cover-image');
+	}
 
-<body <?php body_class(); ?>>
+	if (!empty($body_style)) $body_style = ' style="' . $body_style . '"';
+?>
+
+<body <?php body_class($body_class); ?><?php echo $body_style; ?>>
 <header>
-
+	<?php if (is_home() || is_front_page()) { ?>
+		<div class="logo">
+			<h1>Whitebolt</h1>
+			<p>...let the experts manage your site.</p>
+		</div>
+	<?php } ?>
 </header>
