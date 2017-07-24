@@ -1,0 +1,14 @@
+/*
+Theme Name: Whitebolt LTD
+Theme URI: https://whitebolt.net/wordpress/themes/whitebolt/
+Author: Whitebolt LTD
+Author URI: https://whitebolt.net/users/simpo/
+Description: Whitebolt LTD
+Version: 0.0.2
+License: All Rights Reserved
+License URI: https://whitebolt.net/wordpress/themes/whitebolt/license
+Tags: blog, two-columns, left-sidebar, accessibility-ready, custom-background, custom-colors, custom-header, custom-logo, custom-menu, editor-style, featured-images, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
+Text Domain: whitebolt
+
+Whitebolt LTD
+*/

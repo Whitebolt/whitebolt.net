@@ -1,0 +1,23 @@
+@import "../../lib/foundation-sites/scss/settings/_settings";
+
+$spacer: 10px;
+
+$jet: rgba(45, 45, 45, 1);
+$grey: rgba(220, 220, 220, 1);
+$darkGrey: rgba(100, 100, 100, 1);
+$mediumGrey: rgba(190, 190, 190, 1);
+$lightGrey: rgba(245, 245, 245, 1);
+
+$overlayBackground: rgba($black, 0.7);
+$bodyBackround: $grey;
+$footerBackground: $black;
+$contentBackground: $white;
+
+@mixin overlay() {
+	background-color: $overlayBackground;
+	color: $white;
+	overflow: hidden;
+	padding: $spacer*2;
+	position: absolute;
+	z-index: 3;
+}
