@@ -14,8 +14,7 @@ function wb_enqueue() {
 	wb_register_lib('what-input', '/what-input/dist/what-input', '4.0.6');
 	wb_register_lib('foundation', '/foundation-sites/dist/js/foundation', '6.3.1', array('what-input'));
 	wb_register_lib('angular', '/angular/angular', '1.6.5', array('jquery'));
-	wb_register_lib('angular-bolt', '/angular-bolt/index', '0.0.1', array('angular'));
-	wb_register_script('wb', '/index', array('jquery', 'foundation', 'angular', 'angular-bolt'));
+	wb_register_script('wb', '/index', array('jquery', 'foundation', 'angular'));
 
 	wb_enqueuer('style', array('foundation', 'font-awesome', 'main'));
 	wb_enqueuer('script', array(
@@ -23,7 +22,6 @@ function wb_enqueue() {
 		'what-input',
 		'foundation',
 		'angular',
-		'angular-bolt',
 		'wb'
 	));
 }

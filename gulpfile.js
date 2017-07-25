@@ -1,6 +1,7 @@
 'use strict';
 
 const config = require('./package.json');
+const angularBoltConfig = require('./lib/angular-bolt/package.json');
 const sftpConfig = require('./sftp.json');
 const fs = require('fs');
 const gulp = require('gulp');
@@ -17,6 +18,9 @@ const debug = require('gulp-debug');
 const sftp = require('gulp-sftp-new');
 const livereload = require('gulp-livereload');
 
+config.gulp.source.scripts = angularBoltConfig.srcRoots
+	.map(item=>item.replace(/^\./, './lib/angular-bolt'))
+	.concat(config.gulp.source.scripts);
 
 config.gulp.deployment = {
 	"scripts": Object.assign({}, config.gulp.deployment, {

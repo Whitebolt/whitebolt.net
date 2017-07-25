@@ -10,4 +10,7 @@
 			</article>
 		<?php endwhile; ?>
 	</main-->
+
+	<article dynamic-loader="wordpressApi" id="content">
+	</article>
 <?php get_footer();
