@@ -32,8 +32,8 @@
 <header>
 	<?php if (is_home() || is_front_page()) { ?>
 		<div class="logo">
-			<h1>Whitebolt</h1>
-			<p>...let the experts manage your site.</p>
+			<!--h1>Whitebolt</h1-->
+			<p class="menu-info">...let the experts manage your site.</p>
 		</div>
 
 		<?php echo wp_nav_menu(array(

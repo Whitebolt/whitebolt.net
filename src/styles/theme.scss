@@ -1,4 +1,5 @@
 @import "variables";
+@import "http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext";
 
 body, html {
 	font-size: 1rem;
@@ -6,6 +7,8 @@ body, html {
 	margin: 0;
 	padding: 0;
 	width: 100%;
+
+	font-family: "Lato";
 }
 
 body.cover-image {
@@ -16,9 +19,13 @@ body.cover-image {
 
 header .logo {
 	color: $white;
-	left: $spacer*5;
+	left: 35%;
 	position: absolute;
-	top: $spacer*5;
+	top: 35%;
+	height: 35%;
+	width: 35%;
+	right: 35%;
+	bottom: 35%;
 
 	h1 {
 		font-size: 5rem;
@@ -26,22 +33,71 @@ header .logo {
 
 	p {
 		color: $lightGrey;
-		font-size: 1.5rem;
-		font-style: italic;
-		margin-left: $spacer*5;
-		margin-top: -1.5rem;
+		font-size: 1.4rem;
+		background-color: rgba($darkGrey, 0.7);
+		border-radius: $spacer;
+		padding: $spacer*2;
+		min-height: 250px;
+		display: block;
 	}
+}
+
+main {
+	color: $jet;
+	left: $spacer*5;
+	padding: $spacer/2;
+	position: absolute;
+	top: $spacer*25;
+	bottom: $spacer*5;
+	width: 65%;
+	border: 1px solid $white;
+	border-radius: $spacer;
+	background-color: rgba($lightGrey, 0.9);
+	display: none;
 }
 
 header .main-menu {
 	color: $white;
-	position: absolute;
-	right: $spacer*5;
-	top: $spacer*10;
+
+	li:nth-child(1) {
+		position: absolute;
+		left: 20%;
+		top: 20%;
+	}
+
+	li:nth-child(2) {
+		position: absolute;
+		right: 20%;
+		top: 10%;
+	}
+
+	li:nth-child(3) {
+		position: absolute;
+		left: 5%;
+		bottom: 40%;
+	}
+
+	li:nth-child(4) {
+		position: absolute;
+		left: 35%;
+		bottom: 10%;
+	}
+
+	li:nth-child(5) {
+		position: absolute;
+		right: 5%;
+		bottom: 30%;
+	}
 
 	li {
-		&:hover {
-			background-color: rgba($lightGrey, 0.7);
+		&:hover, &.hover {
+			background-color: rgba($black, 0.2);
+			border-radius: $spacer;
+
+			a {
+				color: $white;
+				text-decoration: none;
+			}
 		}
 
 		font-size: 1.2rem;
@@ -49,8 +105,8 @@ header .main-menu {
 		color: inherit;
 		list-style: none;
 		width: 300px;
-		border: 2px solid $white;
-		border-radius: $spacer;
+		//border: 2px solid $white;
+		//border-radius: $spacer;
 		padding: 0;
 		margin-bottom: $spacer;
 		text-align: center;
@@ -63,11 +119,6 @@ header .main-menu {
 			margin: 0;
 			color: inherit;
 			text-decoration: none;
-
-			&:hover {
-				color: $white;
-				text-decoration: none;
-			}
 		}
 	}
 }

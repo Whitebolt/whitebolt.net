@@ -45,4 +45,13 @@ function wb_setup() {
 }
 add_action( 'after_setup_theme', 'wb_setup' );
 
+function be_header_menu_desc( $item_output, $item, $depth, $args ) {
+
+	if($item->description )
+		$item_output = str_replace( '<a', '<a description="' . $item->description . '" ', $item_output );
+
+	return $item_output;
+}
+add_filter( 'walker_nav_menu_start_el', 'be_header_menu_desc', 10, 4 );
+
 ?>
