@@ -1,6 +1,10 @@
 @import "variables";
 @import "http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext";
 
+#wpadminbar {
+	display: none;
+}
+
 body, html {
 	font-size: 1rem;
 	height: 100%;
@@ -17,28 +21,155 @@ body.cover-image {
 	background-size: cover;
 }
 
-header .logo {
+body>header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 75px;
+	text-align: center;
+	background-color: rgba($black, 0.2);
 	color: $white;
-	left: 35%;
-	position: absolute;
-	top: 35%;
-	height: 35%;
-	width: 35%;
-	right: 35%;
-	bottom: 35%;
+	padding: $spacer;
 
-	h1 {
-		font-size: 5rem;
+	ul.top-menu-left, ul.top-menu-right {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-around;
+		align-items: center;
+		font-size: 1.3rem;
+		height: 55px;
+		color: $lightGrey;
+
+		li {
+			list-style: none;
+
+			&, a, a:hover {
+				color: inherit;
+			}
+
+			&:hover, &.hover {
+				color: $white;
+				text-shadow: 2px 2px rgba($white, 0.5);
+			}
+		}
 	}
 
-	p {
+	h1 {
+		font-size: 55px;
+		line-height: 55px;
+		margin: 0;
+	}
+}
+
+body>nav.homepage-nav {
+	.menu-info {
+		left: 35%;
+		position: absolute;
+		top: 20%;
+		height: 65%;
+		width: 35%;
+
 		color: $lightGrey;
 		font-size: 1.4rem;
 		background-color: rgba($darkGrey, 0.7);
 		border-radius: $spacer;
 		padding: $spacer*2;
 		min-height: 250px;
-		display: block;
+
+		h2 {
+			color: $white;
+			text-align: center;
+			font-size: 1.6rem;
+			margin: 0;
+			margin-top: $spacer*2;
+
+			&:before, &:after {
+				content: "-";
+			}
+		}
+	}
+
+	.menu-logos {
+		position: absolute;
+		visibility: hidden;
+		width: 200px;
+	}
+
+	&.bespoke img.menu-logos.bespoke {
+		visibility: visible;
+	}
+
+	&.hosting img.menu-logos.hosting {
+		visibility: visible;
+	}
+
+	&.website-design img.menu-logos.website-design {
+		visibility: visible;
+	}
+
+	.main-menu {
+		color: $white;
+
+		li:nth-child(1) {
+			position: absolute;
+			left: 10%;
+			top: 20%;
+		}
+
+		li:nth-child(2) {
+			position: absolute;
+			right: 5%;
+			top: 15%;
+		}
+
+		li:nth-child(3) {
+			position: absolute;
+			left: 5%;
+			bottom: 40%;
+		}
+
+		li:nth-child(4) {
+			position: absolute;
+			left: 35%;
+			bottom: 5%;
+		}
+
+		li:nth-child(5) {
+			position: absolute;
+			right: 3%;
+			bottom: 30%;
+		}
+
+		li {
+			&:hover, &.hover {
+				background-color: rgba($black, 0.2);
+				border-radius: $spacer;
+
+				a {
+					color: $white;
+					text-decoration: none;
+				}
+			}
+
+			font-size: 1.2rem;
+			font-weight: 500;
+			color: inherit;
+			list-style: none;
+			width: 300px;
+			padding: 0;
+			margin-bottom: $spacer;
+			text-align: center;
+
+			a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				padding: $spacer/2;
+				margin: 0;
+				color: inherit;
+				text-decoration: none;
+			}
+		}
 	}
 }
 
@@ -54,71 +185,4 @@ main {
 	border-radius: $spacer;
 	background-color: rgba($lightGrey, 0.9);
 	display: none;
-}
-
-header .main-menu {
-	color: $white;
-
-	li:nth-child(1) {
-		position: absolute;
-		left: 20%;
-		top: 20%;
-	}
-
-	li:nth-child(2) {
-		position: absolute;
-		right: 20%;
-		top: 10%;
-	}
-
-	li:nth-child(3) {
-		position: absolute;
-		left: 5%;
-		bottom: 40%;
-	}
-
-	li:nth-child(4) {
-		position: absolute;
-		left: 35%;
-		bottom: 10%;
-	}
-
-	li:nth-child(5) {
-		position: absolute;
-		right: 5%;
-		bottom: 30%;
-	}
-
-	li {
-		&:hover, &.hover {
-			background-color: rgba($black, 0.2);
-			border-radius: $spacer;
-
-			a {
-				color: $white;
-				text-decoration: none;
-			}
-		}
-
-		font-size: 1.2rem;
-		font-weight: 500;
-		color: inherit;
-		list-style: none;
-		width: 300px;
-		//border: 2px solid $white;
-		//border-radius: $spacer;
-		padding: 0;
-		margin-bottom: $spacer;
-		text-align: center;
-
-		a {
-			display: block;
-			width: 100%;
-			height: 100%;
-			padding: $spacer/2;
-			margin: 0;
-			color: inherit;
-			text-decoration: none;
-		}
-	}
 }

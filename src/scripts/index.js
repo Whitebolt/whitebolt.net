@@ -4,11 +4,21 @@
 	const $doc = $(document);
 	const angular = global.angular;
 
-	let homeMenu = $("header .main-menu li");
-	let menuInfo = $($("header .menu-info").get(0));
+	let homeMenu = $("body>header nav li");
+	let menuInfo = $($("nav.homepage-nav .menu-info").get(0));
 	let cNodeNo = (homeMenu.length - 1);
 	let cNode;
 	let paused = false;
+	let logoSets = new Set();
+
+	$("nav.homepage-nav img.menu-logos").each((n, _node)=>{
+		$(_node)
+			.attr("class")
+			.split(' ')
+			.map(className=>className.trim())
+			.filter(className=>(className !== ""))
+			.forEach(className=>logoSets.add(className));
+	});
 
 	homeMenu.hover(onHover);
 
@@ -35,15 +45,24 @@
 	function setInfo() {
 		let a = cNode.find("a[description]");
 		let description = ((a.length) ? $(a.get(0)).attr("description").trim() : "");
-		menuInfo.text(description);
+		let title = cNode.text();
+		menuInfo.html("<h2>"+title+"</h2><p>"+description+"</p>");
 	}
 
 	function setHover() {
 		cNode.addClass("hover");
+		cNode.attr("class")
+			.split(' ')
+			.map(className=>className.trim())
+			.filter(className=>(logoSets.has(className)))
+			.forEach(className=>{
+				$("nav.homepage-nav").addClass(className);
+			});
 	}
 
 	function removeHover() {
 		cNode.removeClass("hover");
+		$("nav.homepage-nav").removeClass(Array.from(logoSets).join(" "));
 	}
 
 	function incNode() {

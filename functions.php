@@ -5,7 +5,7 @@ require_once('inc/enqueue.php');
 require_once('inc/customise.php');
 
 function wb_enqueue() {
-	wb_register_style('foundation', PIY_LIB_DIR . '/foundation-sites/dist/css/foundation.min.css', '6.3.1');
+	wb_register_style('foundation', PIY_LIB_DIR . '/foundation-sites/dist/css/foundation-float.min.css', '6.3.1');
 	wb_register_style('font-awesome', PIY_LIB_DIR . '/font-awesome/css/font-awesome.min.css');
 	wb_register_style('main', PIY_DIR . '/style.css');
 
@@ -39,6 +39,8 @@ function wb_setup() {
 	add_theme_support( 'post-thumbnails' );
 
 	register_nav_menus( array(
+		'main-left'    => __( 'Main Menu Left', 'whitebolt' ),
+		'main-right'    => __( 'Main Menu Right', 'whitebolt' ),
 		'main'    => __( 'Main Menu', 'whitebolt' ),
 		'social' => __( 'Social Menu', 'whitebolt' )
 	) );

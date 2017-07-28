@@ -29,19 +29,43 @@
 ?>
 
 <body app="wb" <?php body_class($body_class); ?><?php echo $body_style; ?>>
-<header>
-	<?php if (is_home() || is_front_page()) { ?>
-		<div class="logo">
-			<!--h1>Whitebolt</h1-->
-			<p class="menu-info">...let the experts manage your site.</p>
-		</div>
-
+<header class="row">
+	<nav class="medium-5 columns">
 		<?php echo wp_nav_menu(array(
-			'theme_location'  => 'main',
-			'menu_class' => 'main-menu',
+			'theme_location'  => 'main-left',
+			'container'       => false,
+			'menu_class'      => 'top-menu-left',
 			'echo'            => true,
 			'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
 			'depth'           => 0
 		));?>
-	<?php } ?>
+	</nav>
+	<h1 class="logo medium-2 columns">Whitebolt</h1>
+	<nav class="medium-5 columns">
+		<?php echo wp_nav_menu(array(
+			'theme_location'  => 'main-right',
+			'menu_class' => 'top-menu-right',
+			'echo'            => true,
+			'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+			'depth'           => 0
+		));?>
+	</nav>
 </header>
+<nav class="homepage-nav">
+	<?php if (is_home() || is_front_page()) { ?>
+		<div class="menu-info">
+			<h1 class="logo">Whitebolt</h1>
+		</div>
+
+		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/mongodb.png" style="left:10%;top:30%" class="menu-logos bespoke" />
+		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/nodejs.png" style="right:5%;top:30%" class="menu-logos bespoke" />
+		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/postgressql.png" style="left:15%;bottom:5%" class="menu-logos bespoke" />
+
+		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/nginx.png" style="left:10%;top:30%" class="menu-logos hosting" />
+		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/php7.png" style="right:5%;top:20%;width:150px" class="menu-logos hosting" />
+		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/mariadb.png" style="left:15%;bottom:5%" class="menu-logos hosting" />
+
+		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/woocommerce.png" style="left:10%;top:30%" class="menu-logos website-design" />
+		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/wordpress.png" style="right:5%;top:30%" class="menu-logos website-design" />
+	<?php } ?>
+</nav>
