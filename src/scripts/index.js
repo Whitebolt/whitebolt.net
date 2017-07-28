@@ -4,7 +4,7 @@
 	const $doc = $(document);
 	const angular = global.angular;
 
-	let homeMenu = $("body>header nav li");
+	let homeMenu = $("body>header nav li.menu-item");
 	let menuInfo = $($("nav.homepage-nav .menu-info").get(0));
 	let cNodeNo = (homeMenu.length - 1);
 	let cNode;
@@ -36,8 +36,8 @@
 	}
 
 	function setCNode(target) {
-		cNode = $(target).closest("li");
-		cNode.parent().find("li").each((n, node)=>{
+		cNode = $(target).closest("li.menu-item");
+		cNode.parent().find("li.menu-item").each((n, node)=>{
 			if (node === target) cNodeNo = n;
 		});
 	}

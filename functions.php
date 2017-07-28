@@ -39,8 +39,6 @@ function wb_setup() {
 	add_theme_support( 'post-thumbnails' );
 
 	register_nav_menus( array(
-		'main-left'    => __( 'Main Menu Left', 'whitebolt' ),
-		'main-right'    => __( 'Main Menu Right', 'whitebolt' ),
 		'main'    => __( 'Main Menu', 'whitebolt' ),
 		'social' => __( 'Social Menu', 'whitebolt' )
 	) );
@@ -51,9 +49,18 @@ function be_header_menu_desc( $item_output, $item, $depth, $args ) {
 
 	if($item->description )
 		$item_output = str_replace( '<a', '<a description="' . $item->description . '" ', $item_output );
-
 	return $item_output;
 }
 add_filter( 'walker_nav_menu_start_el', 'be_header_menu_desc', 10, 4 );
+
+function split_menu($menu_html, $middle_content) {
+	$items = array_map(function($item){
+		return '<li'.$item;
+	}, explode('<li', $menu_html));
+	$length = count($items) - 1;
+	$balance = (floor($length / 2) + ($length % 2));
+	array_splice($items, $balance+1, 0, '</ul>'.$middle_content.$items[0]);
+	return str_replace('<li<ul', '<ul', implode('', $items));
+}
 
 ?>

@@ -30,25 +30,17 @@
 
 <body app="wb" <?php body_class($body_class); ?><?php echo $body_style; ?>>
 <header class="row">
-	<nav class="medium-5 columns">
-		<?php echo wp_nav_menu(array(
-			'theme_location'  => 'main-left',
-			'container'       => false,
-			'menu_class'      => 'top-menu-left',
-			'echo'            => true,
-			'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-			'depth'           => 0
-		));?>
-	</nav>
-	<h1 class="logo medium-2 columns">Whitebolt</h1>
-	<nav class="medium-5 columns">
-		<?php echo wp_nav_menu(array(
-			'theme_location'  => 'main-right',
-			'menu_class' => 'top-menu-right',
-			'echo'            => true,
-			'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-			'depth'           => 0
-		));?>
+	<nav>
+		<?php
+			echo split_menu(wp_nav_menu(array(
+				'theme_location'  => 'main',
+				'container'       => false,
+				'menu_class'      => 'top-menu',
+				'echo'            => false,
+				'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+				'depth'           => 0
+			)), '<div class="logo">Whitebolt</div>');
+		?>
 	</nav>
 </header>
 <nav class="homepage-nav">
