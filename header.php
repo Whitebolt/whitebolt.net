@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> class="no-js svg">
+<html <?php language_attributes(); ?> class="no-js svg" style="margin:0 !important;">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width">
@@ -48,16 +48,5 @@
 		<div class="menu-info">
 			<h1 class="logo">Whitebolt</h1>
 		</div>
-
-		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/mongodb.png" style="left:10%;top:30%" class="menu-logos bespoke" />
-		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/nodejs.png" style="right:5%;top:30%" class="menu-logos bespoke" />
-		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/postgressql.png" style="left:15%;bottom:5%" class="menu-logos bespoke" />
-
-		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/nginx.png" style="left:10%;top:30%" class="menu-logos hosting" />
-		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/php7.png" style="right:5%;top:20%;width:150px" class="menu-logos hosting" />
-		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/mariadb.png" style="left:15%;bottom:5%" class="menu-logos hosting" />
-
-		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/woocommerce.png" style="left:10%;top:30%" class="menu-logos website-design" />
-		<img src="<?php echo get_template_directory_uri(); ?>/media/logos/wordpress.png" style="right:5%;top:30%" class="menu-logos website-design" />
 	<?php } ?>
 </nav>

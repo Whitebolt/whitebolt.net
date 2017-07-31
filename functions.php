@@ -45,13 +45,41 @@ function wb_setup() {
 }
 add_action( 'after_setup_theme', 'wb_setup' );
 
-function be_header_menu_desc( $item_output, $item, $depth, $args ) {
+function wb_alter_menu_item( $item_output, $item) {
+	$excerpt = get_the_excerpt($item->object_id);
+	$title = get_the_title($item->object_id);
+	$attributes = array('ref-id'=>$item->object_id);
 
-	if($item->description )
-		$item_output = str_replace( '<a', '<a description="' . $item->description . '" ', $item_output );
+	$images = array_map(function($src) {
+		$id = attachment_url_to_postid($src);
+		$angle = get_post_meta($id, 'wpcf-angle');
+		$distance = get_post_meta($id, 'wpcf-distance');
+		$imgNodeData = wp_get_attachment_image_src($id, 'medium');
+
+		return array(
+			'src' => $imgNodeData[0],
+			'width' => $imgNodeData[1],
+			'height' => $imgNodeData[2],
+			'angle'=>($angle?(int) $angle[0]:0),
+			'distance'=>($distance?(int) $distance[0]:0)
+		);
+	}, get_post_meta($item->object_id, 'wpcf-homepage-icons'));
+
+	if($excerpt) $attributes['description'] = $excerpt;
+	if($item->description) $attributes['description'] = $item->description;
+	if($title) $attributes['title'] = $title;
+	if($item->attr_title) $attributes['title'] = $item->attr_title;
+	if(count($images)) $attributes['logos'] = json_encode($images);
+
+	foreach($attributes as $attribute => $value) {
+		$item_output = str_replace('<a', '<a '.$attribute.'="'.str_replace('"', '&quot;', $value).'"', $item_output);
+	}
+
+	PC::debug($images);
+	PC::debug($item);
 	return $item_output;
 }
-add_filter( 'walker_nav_menu_start_el', 'be_header_menu_desc', 10, 4 );
+add_filter( 'walker_nav_menu_start_el', 'wb_alter_menu_item', 10, 4 );
 
 function split_menu($menu_html, $middle_content) {
 	$items = array_map(function($item){

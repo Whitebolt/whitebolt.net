@@ -9,18 +9,55 @@
 	let cNodeNo = (homeMenu.length - 1);
 	let cNode;
 	let paused = false;
-	let logoSets = new Set();
-
-	$("nav.homepage-nav img.menu-logos").each((n, _node)=>{
-		$(_node)
-			.attr("class")
-			.split(' ')
-			.map(className=>className.trim())
-			.filter(className=>(className !== ""))
-			.forEach(className=>logoSets.add(className));
-	});
+	let logoNodes = new Map();
 
 	homeMenu.hover(onHover);
+
+	homeMenu.find("a[logos]").each((n, a)=>createLogos($(a)));
+
+	function createLogos(a) {
+		console.log(a);
+		let logos = JSON.parse(a.attr("logos") || "[]");
+		let ref = a.attr("ref-id");
+
+		let sides = {
+			leftRight: menuInfo.offset().left,
+			topBottom: menuInfo.offset().top
+		};
+
+		logos.forEach(logo=>{
+			if ((logo.angle >= 0 ) && (logo.angle <= 45)) {
+				logo.left = (menuInfo.outerWidth() / 2) + ((menuInfo.outerWidth() / 100) * ((45 - logo.angle) * 1.111));
+				logo.top = sides.topBottom - ((sides.topBottom / 100) * logo.distance);
+			} else if ((logo.angle > 45) && (logo.angle <= 135)) {
+				logo.left = menuInfo.outerWidth() + sides.leftRight + ((sides.leftRight / 100) * logo.distance);
+				logo.top = ($(global).height()/100) * ((90-(135-logo.angle)) * 1.111);
+			} else if ((logo.angle > 135) && (logo.angle <= 225)) {
+				logo.left = (menuInfo.outerWidth() / 100) * (100 - (90-(225 - logo.angle)) * 1.111);
+				logo.top = sides.topBottom + menuInfo.outerHeight() + ((sides.topBottom / 100) * logo.distance);
+			} else if ((logo.angle > 225) && (logo.angle <= 315)) {
+				logo.left = sides.leftRight - (logo.distance * (sides.leftRight/100)) - (logo.width/ 2);
+				logo.top = ($(global).height() / 100) * ((315 - logo.angle) * 1.111);
+			} else if ((logo.angle > 315) && (logo.angle <= 360)) {
+				logo.left = (menuInfo.outerWidth() / 100) * (100 - ((360 - logo.angle) * 1.111));
+				logo.top = sides.topBottom - ((sides.topBottom / 100) * logo.distance);
+			}
+
+			if (!logoNodes.has(logo.src)) logoNodes.set(logo.src, $("<img>"));
+			let logoNode = logoNodes.get(logo.src);
+
+			logoNode.attr("src", logo.src)
+				.attr("width", logo.width)
+				.attr("height", logo.height)
+				.addClass("ref-"+ref)
+				.addClass("menu-logos")
+				.css({
+					left: parseInt(logo.left, 10) + "px",
+					top: parseInt(logo.top, 10) +"px"
+				})
+				.appendTo("nav.homepage-nav");
+		});
+	}
 
 	function onHover(event) {
 		if (paused) return pause();
@@ -43,26 +80,28 @@
 	}
 
 	function setInfo() {
-		let a = cNode.find("a[description]");
-		let description = ((a.length) ? $(a.get(0)).attr("description").trim() : "");
-		let title = cNode.text();
-		menuInfo.html("<h2>"+title+"</h2><p>"+description+"</p>");
+		let a = $(cNode.find("a[description],a[excerpt]").get(0));
+		let description = ((a.length) ? (a.attr("description") || "").trim() : undefined);
+		let title = a.attr("title") || cNode.text();
+		menuInfo.html("<h2>" + title + "</h2><p>" + (description || "") + "</p>");
+		createLogos(a);
 	}
 
 	function setHover() {
 		cNode.addClass("hover");
-		cNode.attr("class")
-			.split(' ')
-			.map(className=>className.trim())
-			.filter(className=>(logoSets.has(className)))
-			.forEach(className=>{
-				$("nav.homepage-nav").addClass(className);
-			});
+		let ref = cNode.find("a").attr("ref-id");
+		$("nav.homepage-nav img").each((n, _img)=>{
+			let img = $(_img);
+			if (img.hasClass("ref-"+ref)) {
+				img.css("visibility", "visible");
+			} else {
+				img.css("visibility", "hidden");
+			}
+		});
 	}
 
 	function removeHover() {
 		cNode.removeClass("hover");
-		$("nav.homepage-nav").removeClass(Array.from(logoSets).join(" "));
 	}
 
 	function incNode() {
