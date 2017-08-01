@@ -77,19 +77,12 @@ body>nav.homepage-nav {
 	.menu-info {
 		position: absolute;
 
-		@media (orientation: portrait) {
-			left: 33%;
-			height: 33%;
-			top: 50%;
-			width: 60%;
-		}
-
-		@media (orientation: landscape) {
-			height: 60%;
-			left: 33%;
-			top: 20%;
-			width: 33%;
-		}
+		height: 60%;
+		bottom: 10%;
+		left: 10%;
+		right: 10%;
+		top: 20%;
+		width: 80%;
 
 		color: $lightGrey;
 		font-size: 1.4rem;
@@ -98,34 +91,48 @@ body>nav.homepage-nav {
 		padding: $spacer*2;
 		min-height: 250px;
 
-		h2 {
-			color: $white;
-			text-align: center;
-			font-size: 1.6rem;
-			margin: 0;
-			margin-top: $spacer*2;
+		.info {
+			position: relative;
+			height: 100%;
+			width: 100%;
 
-			&:before, &:after {
-				content: "-";
+			.info-logos {
+				position: absolute;
+				bottom: $spacer*2;
+				width: 100%;
+				text-align: center;
+
+				img {
+					margin: 1%;
+				}
+			}
+
+			h2 {
+				color: $white;
+				text-align: center;
+				font-size: 1.6rem;
+				margin: 0;
+				margin-top: $spacer*2;
+
+				&:before, &:after {
+					content: "-";
+				}
 			}
 		}
-	}
 
-	.menu-logos {
-		position: absolute;
-		visibility: hidden;
-	}
+		/*.logos {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			align-content: space-around;
 
-	&.bespoke img.menu-logos.bespoke {
-		visibility: visible;
-	}
-
-	&.hosting img.menu-logos.hosting {
-		visibility: visible;
-	}
-
-	&.website-design img.menu-logos.website-design {
-		visibility: visible;
+			img {
+				flex-basis: auto;
+				flex-shrink: 1;
+				flex-grow: 1;
+			}
+		}*/
 	}
 
 	.main-menu {

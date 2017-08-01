@@ -13,7 +13,7 @@
 	homeMenu.hover(onHover);
 
 	function onHover(event) {
-		if (paused) return pause();
+		if (paused) return; //pause();
 		pause();
 		removeHover();
 		setCNode(event.target);
@@ -34,9 +34,13 @@
 
 	function setInfo() {
 		let a = $(cNode.find("a[description],a[excerpt]").get(0));
-		let description = ((a.length) ? (a.attr("description") || "").trim() : undefined);
+		let description = ((a.length) ? (a.attr("description") || "").trim() : undefined).replace(/[\r\f\n\s]+/g,' ');
 		let title = a.attr("title") || cNode.text();
-		menuInfo.html("<h2>" + title + "</h2><p>" + (description || "") + "</p>");
+
+		menuInfo.html(`<div class="info">
+			<h2>${title}</h2>
+			${description}
+		</div>`);
 	}
 
 	function setHover() {

@@ -7,7 +7,7 @@ require_once('inc/customise.php');
 function wb_enqueue() {
 	wb_register_style('foundation', PIY_LIB_DIR . '/foundation-sites/dist/css/foundation-float.min.css', '6.3.1');
 	wb_register_style('font-awesome', PIY_LIB_DIR . '/font-awesome/css/font-awesome.min.css');
-	wb_register_style('main', PIY_DIR . '/style.css');
+	wb_register_style('main', PIY_DIR . '/style.css', '0.0.2');
 
 	wp_deregister_script( 'jquery' );
 	wb_register_lib('jquery', '/jquery/dist/jquery', '3.1.1');
@@ -90,5 +90,4 @@ function split_menu($menu_html, $middle_content) {
 	array_splice($items, $balance+1, 0, '</ul>'.$middle_content.$items[0]);
 	return str_replace('<li<ul', '<ul', implode('', $items));
 }
-
 ?>
