@@ -2,7 +2,7 @@
 <html <?php language_attributes(); ?> class="no-js svg" style="margin:0 !important;">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<base href="/">
 
 	<title><?php if (!is_front_page()) {wp_title('');echo ' | ';} bloginfo('name'); ?></title>

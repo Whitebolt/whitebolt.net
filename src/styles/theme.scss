@@ -19,6 +19,7 @@ body.cover-image {
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;
+	background-attachment: fixed;
 }
 
 body>header {
@@ -74,11 +75,21 @@ body>header {
 
 body>nav.homepage-nav {
 	.menu-info {
-		left: 35%;
 		position: absolute;
-		top: 20%;
-		height: 65%;
-		width: 35%;
+
+		@media (orientation: portrait) {
+			left: 33%;
+			height: 33%;
+			top: 50%;
+			width: 60%;
+		}
+
+		@media (orientation: landscape) {
+			height: 60%;
+			left: 33%;
+			top: 20%;
+			width: 33%;
+		}
 
 		color: $lightGrey;
 		font-size: 1.4rem;

@@ -16,7 +16,6 @@
 	homeMenu.find("a[logos]").each((n, a)=>createLogos($(a)));
 
 	function createLogos(a) {
-		console.log(a);
 		let logos = JSON.parse(a.attr("logos") || "[]");
 		let ref = a.attr("ref-id");
 
@@ -33,13 +32,13 @@
 				logo.left = menuInfo.outerWidth() + sides.leftRight + ((sides.leftRight / 100) * logo.distance);
 				logo.top = ($(global).height()/100) * ((90-(135-logo.angle)) * 1.111);
 			} else if ((logo.angle > 135) && (logo.angle <= 225)) {
-				logo.left = (menuInfo.outerWidth() / 100) * (100 - (90-(225 - logo.angle)) * 1.111);
+				logo.left = (($(global).width() / 100) * (100 - ((225 - logo.angle) * 1.111))) - (logo.width/2);
 				logo.top = sides.topBottom + menuInfo.outerHeight() + ((sides.topBottom / 100) * logo.distance);
 			} else if ((logo.angle > 225) && (logo.angle <= 315)) {
 				logo.left = sides.leftRight - (logo.distance * (sides.leftRight/100)) - (logo.width/ 2);
 				logo.top = ($(global).height() / 100) * ((315 - logo.angle) * 1.111);
 			} else if ((logo.angle > 315) && (logo.angle <= 360)) {
-				logo.left = (menuInfo.outerWidth() / 100) * (100 - ((360 - logo.angle) * 1.111));
+				logo.left = ($(global).width() / 100) * (100 - ((360 - logo.angle) * 1.111));
 				logo.top = sides.topBottom - ((sides.topBottom / 100) * logo.distance);
 			}
 
@@ -165,6 +164,7 @@
 
 	$doc.ready(()=>{
 		$(global.document).foundation();
+
 		$("[app]").each((index, appNode)=>{
 			const appName = $(appNode).attr("app");
 			angular.bootstrap(appNode, [appName]);
