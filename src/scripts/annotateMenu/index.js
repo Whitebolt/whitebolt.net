@@ -6,7 +6,8 @@
 	angular.module("wb").directive(controllerAs, [
 		"boltDirective",
 		"$document",
-	($directive, $doc)=>{
+		"$animationInterval",
+	($directive, $doc, $animationInterval)=>{
 		function link(scope, root, attributes, controller) {
 			$directive.link({scope, root, controller});
 
@@ -18,7 +19,7 @@
 
 			let _nextMenuItem = nextMenuItem.bind(controller);
 			_nextMenuItem.period = (controller.period ? (parseFloat(controller.period) * 1000) : 5000);
-			global.intervalCallbacks.add(_nextMenuItem);
+			$animationInterval.add(_nextMenuItem);
 		}
 
 		function incNode(controller=this) {

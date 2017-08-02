@@ -36,7 +36,7 @@
       "scriptsWatch": "./src/*/*.js",
       "scripts": [
         "./src/scripts/index.js",
-        "./src/scripts/interval.js",
+        "./src/scripts/$animationInterval.js",
         "./src/scripts/moveOn.js",
         "./src/scripts/resizer.js",
         "./src/scripts/body/index.js",
