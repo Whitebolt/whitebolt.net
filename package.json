@@ -35,10 +35,13 @@
     "source": {
       "scriptsWatch": "./src/*/*.js",
       "scripts": [
+        "./src/scripts/index.js",
         "./src/scripts/interval.js",
         "./src/scripts/moveOn.js",
         "./src/scripts/resizer.js",
-        "./src/scripts/index.js"
+        "./src/scripts/body/index.js",
+        "./src/scripts/annotateMenu/index.js",
+        "./src/scripts/bootstrap.js"
       ],
       "stylesWatch": "./src/*/*.scss",
       "styles": [
