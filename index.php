@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <?php if (!is_home() && !is_front_page()) { ?>
-	<main>
+	<main class="page">
 		<?php while ( have_posts() ) : the_post(); ?>
 			<article wordpress-loader id="content">
 				<?php get_template_part('title'); ?>

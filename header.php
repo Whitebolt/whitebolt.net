@@ -18,6 +18,7 @@
 </head>
 <?php
 	$image_url  = types_render_field( 'background-image', array('url' => true));
+	if (empty($image_url)) $image_url = get_theme_mod('default_background');
 	$body_class = array();
 	$body_style = '';
 	if (!empty($image_url)) {
