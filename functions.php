@@ -45,42 +45,6 @@ function wb_setup() {
 }
 add_action( 'after_setup_theme', 'wb_setup' );
 
-function wb_alter_menu_item( $item_output, $item) {
-	$excerpt = get_the_excerpt($item->object_id);
-	$title = get_the_title($item->object_id);
-	$attributes = array('ref-id'=>$item->object_id);
-
-	$images = array_map(function($src) {
-		$id = attachment_url_to_postid($src);
-		$angle = get_post_meta($id, 'wpcf-angle');
-		$distance = get_post_meta($id, 'wpcf-distance');
-		$imgNodeData = wp_get_attachment_image_src($id, 'medium');
-
-		return array(
-			'src' => $imgNodeData[0],
-			'width' => $imgNodeData[1],
-			'height' => $imgNodeData[2],
-			'angle'=>($angle?(int) $angle[0]:0),
-			'distance'=>($distance?(int) $distance[0]:0)
-		);
-	}, get_post_meta($item->object_id, 'wpcf-homepage-icons'));
-
-	if($excerpt) $attributes['description'] = $excerpt;
-	if($item->description) $attributes['description'] = $item->description;
-	if($title) $attributes['title'] = $title;
-	if($item->attr_title) $attributes['title'] = $item->attr_title;
-	if(count($images)) $attributes['logos'] = json_encode($images);
-
-	foreach($attributes as $attribute => $value) {
-		$item_output = str_replace('<a', '<a '.$attribute.'="'.str_replace('"', '&quot;', $value).'"', $item_output);
-	}
-
-	PC::debug($images);
-	PC::debug($item);
-	return $item_output;
-}
-add_filter( 'walker_nav_menu_start_el', 'wb_alter_menu_item', 10, 4 );
-
 function split_menu($menu_html, $middle_content) {
 	$items = array_map(function($item){
 		return '<li'.$item;
@@ -89,5 +53,58 @@ function split_menu($menu_html, $middle_content) {
 	$balance = (floor($length / 2) + ($length % 2));
 	array_splice($items, $balance+1, 0, '</ul>'.$middle_content.$items[0]);
 	return str_replace('<li<ul', '<ul', implode('', $items));
+}
+
+
+class WB_Slider_Menu extends Walker_Nav_Menu {
+	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$t = '';
+			$n = '';
+		} else {
+			$t = "\t";
+			$n = "\n";
+		}
+		$indent = ( $depth ) ? str_repeat( $t, $depth ) : '';
+
+		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
+		$classes[] = 'menu-item-' . $item->ID;
+
+		if (!in_array('no-annotation', $classes)) {
+			$args = apply_filters( 'nav_menu_item_args', $args, $item, $depth );
+
+			$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
+			$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+
+			$id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args, $depth );
+			$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+
+			$output .= $indent . '<li' . $id . $class_names .'>';
+
+			$excerpt = (($item->description) ? $item->description : get_the_excerpt($item->object_id));
+			$title = (($item->attr_title) ? $item->attr_title : get_the_title($item->object_id));
+
+			//$output .= '<div class="info">';
+			$output .= '<h2>'.$title.'</h2>';
+			$output .= $excerpt;
+			//$output .= '</div>';
+		}
+	}
+
+	public function end_el( &$output, $item, $depth = 0, $args = array() ) {
+		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
+		$classes[] = 'menu-item-' . $item->ID;
+
+		if (!in_array('no-annotation', $classes)) {
+			if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+				$t = '';
+				$n = '';
+			} else {
+				$t = "\t";
+				$n = "\n";
+			}
+			$output .= "</li>{$n}";
+		}
+	}
 }
 ?>

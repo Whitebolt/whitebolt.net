@@ -73,129 +73,54 @@ body>header {
 	}
 }
 
-body>nav.homepage-nav {
-	.menu-info {
-		position: absolute;
+annotate-menu, [annotate-menu] {
+	position: absolute;
 
-		height: 60%;
-		bottom: 10%;
-		left: 10%;
-		right: 10%;
-		top: 20%;
-		width: 80%;
+	height: 60%;
+	bottom: 10%;
+	left: 10%;
+	right: 10%;
+	top: 20%;
+	width: 80%;
 
-		color: $lightGrey;
-		font-size: 1.4rem;
-		background-color: rgba($darkGrey, 0.7);
-		border-radius: $spacer;
-		padding: $spacer*2;
-		min-height: 250px;
+	color: $lightGrey;
+	font-size: 1.4rem;
+	background-color: rgba($darkGrey, 0.7);
+	border-radius: $spacer;
+	padding: $spacer*2;
+	min-height: 250px;
 
-		.info {
-			position: relative;
-			height: 100%;
-			width: 100%;
+	li {
+		display: none;
+		list-style: none;
+		position: relative;
+		height: 100%;
+		width: 100%;
 
-			.info-logos {
-				position: absolute;
-				bottom: $spacer*2;
-				width: 100%;
-				text-align: center;
-
-				img {
-					margin: 1%;
-				}
-			}
-
-			h2 {
-				color: $white;
-				text-align: center;
-				font-size: 1.6rem;
-				margin: 0;
-				margin-top: $spacer*2;
-
-				&:before, &:after {
-					content: "-";
-				}
-			}
+		&.hover {
+			display: block;
 		}
 
-		/*.logos {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			align-items: center;
-			align-content: space-around;
+		.info-logos {
+			position: absolute;
+			text-align: center;
+			bottom: $spacer*2;
 
 			img {
-				flex-basis: auto;
-				flex-shrink: 1;
-				flex-grow: 1;
+				margin: 1%;
+				margin-bottom: 0;
 			}
-		}*/
-	}
-
-	.main-menu {
-		color: $white;
-
-		li:nth-child(1) {
-			position: absolute;
-			left: 10%;
-			top: 20%;
 		}
 
-		li:nth-child(2) {
-			position: absolute;
-			right: 5%;
-			top: 15%;
-		}
-
-		li:nth-child(3) {
-			position: absolute;
-			left: 5%;
-			bottom: 40%;
-		}
-
-		li:nth-child(4) {
-			position: absolute;
-			left: 35%;
-			bottom: 5%;
-		}
-
-		li:nth-child(5) {
-			position: absolute;
-			right: 3%;
-			bottom: 30%;
-		}
-
-		li {
-			&:hover, &.hover {
-				background-color: rgba($black, 0.2);
-				border-radius: $spacer;
-
-				a {
-					color: $white;
-					text-decoration: none;
-				}
-			}
-
-			font-size: 1.2rem;
-			font-weight: 500;
-			color: inherit;
-			list-style: none;
-			width: 300px;
-			padding: 0;
-			margin-bottom: $spacer;
+		h2 {
+			color: $white;
 			text-align: center;
+			font-size: 1.6rem;
+			margin: 0;
+			margin-top: $spacer*2;
 
-			a {
-				display: block;
-				width: 100%;
-				height: 100%;
-				padding: $spacer/2;
-				margin: 0;
-				color: inherit;
-				text-decoration: none;
+			&:before, &:after {
+				content: "-";
 			}
 		}
 	}

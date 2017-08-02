@@ -4,73 +4,6 @@
 	const $doc = $(document);
 	const angular = global.angular;
 
-	let homeMenu = $("body>header nav li.menu-item");
-	let menuInfo = $($("nav.homepage-nav .menu-info").get(0));
-	let cNodeNo = (homeMenu.length - 1);
-	let cNode;
-	let paused = false;
-
-	homeMenu.hover(onHover);
-
-	function onHover(event) {
-		if (paused) return; //pause();
-		pause();
-		removeHover();
-		setCNode(event.target);
-		setHover();
-		setInfo();
-	}
-
-	function pause() {
-		paused = !paused;
-	}
-
-	function setCNode(target) {
-		cNode = $(target).closest("li.menu-item");
-		cNode.parent().find("li.menu-item").each((n, node)=>{
-			if (node === target) cNodeNo = n;
-		});
-	}
-
-	function setInfo() {
-		let a = $(cNode.find("a[description],a[excerpt]").get(0));
-		let description = ((a.length) ? (a.attr("description") || "").trim() : undefined).replace(/[\r\f\n\s]+/g,' ');
-		let title = a.attr("title") || cNode.text();
-
-		menuInfo.html(`<div class="info">
-			<h2>${title}</h2>
-			${description}
-		</div>`);
-	}
-
-	function setHover() {
-		cNode.addClass("hover");
-	}
-
-	function removeHover() {
-		cNode.removeClass("hover");
-	}
-
-	function incNode() {
-		cNodeNo++;
-		if (cNodeNo >= homeMenu.length) cNodeNo = 0;
-		cNode = $(homeMenu.get(cNodeNo));
-	}
-
-	function nextMenuItem() {
-		if (paused) return;
-		removeHover();
-		incNode();
-		setHover();
-		setInfo();
-	}
-
-	nextMenuItem.period = 5000;
-	incNode();
-	global.intervalCallbacks.add(nextMenuItem);
-	nextMenuItem();
-
-
 	angular.module("wb", [
 		"bolt"
 	]).directive("body", [
@@ -99,8 +32,6 @@
 			let controller = this;
 		}
 
-
-
 		return {
 			restrict: "E",
 			controllerAs: "app",
@@ -109,6 +40,88 @@
 			link
 		};
 	}]);
+
+	angular.module("wb").directive("annotateMenu", [
+		"boltDirective",
+		"$document",
+	($directive, $doc)=>{
+			function link(scope, root, attributes, controller) {
+				$directive.link({scope, root, controller});
+
+				controller.menu = $doc.find(controller.annotateMenu + " li").not(".no-annotation");
+				controller.annotations = root.find("li");
+				nextMenuItem(controller);
+
+				controller.menu.hover(menuHover.bind(controller));
+
+				let _nextMenuItem = nextMenuItem.bind(controller);
+				_nextMenuItem.period = (controller.period ? (parseFloat(controller.period) * 1000) : 5000);
+				global.intervalCallbacks.add(_nextMenuItem);
+			}
+
+			function incNode(controller=this) {
+				if (controller.currentNodeNo === undefined) controller.currentNodeNo = (controller.menu.length-1);
+				controller.currentNodeNo++;
+				if (controller.currentNodeNo >= controller.menu.length) controller.currentNodeNo = 0;
+				controller.currentNode = $(controller.menu.get(controller.currentNodeNo));
+			}
+
+			function menuHover(event, controller=this) {
+				if (pause(controller)) {
+					removeHover(controller);
+					controller.currentNode = angular.element(event.target).closest("li");
+					controller.menu.each((n, item)=>{
+						if (item === controller.currentNode.get(0)) controller.currentNodeNo = n;
+					});
+					setHover(controller);
+					setInfo(controller);
+				}
+			}
+
+			function setHover(controller=this) {
+				if (controller.currentNode) controller.currentNode.addClass("hover");
+			}
+
+			function removeHover(controller=this) {
+				if (controller.currentNode) controller.currentNode.removeClass("hover");
+			}
+
+			function setInfo(controller=this) {
+				controller.annotations.filter(".hover").removeClass("hover");
+				$(controller.annotations.get(controller.currentNodeNo)).addClass("hover");
+			}
+
+			function pause(controller=this) {
+				controller.paused = !controller.paused;
+				return controller.paused;
+			}
+
+			function nextMenuItem(controller=this) {
+				if (controller.paused) return;
+				removeHover(controller);
+				incNode(controller);
+				setHover(controller);
+				setInfo(controller);
+			}
+
+			function annotateMenuSliderController() {
+				let controller = this;
+				controller.paused = false;
+			}
+
+			return {
+				restrict: "AE",
+				controllerAs: "annotateMenuSlider",
+				scope: true,
+				controller: [annotateMenuSliderController],
+				link,
+				bindToController: {
+					annotateMenu: "@",
+					period: "@"
+				}
+			};
+		}
+	]);
 
 	$doc.ready(()=>{
 		$(global.document).foundation();
