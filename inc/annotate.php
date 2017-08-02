@@ -22,7 +22,7 @@ class WB_Slider_Menu extends Walker_Nav_Menu {
 			$id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args, $depth );
 			$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
 
-			$output .= $indent . '<li' . $id . $class_names .'>';
+			$output .= $indent . '<article role="tab"' . $id . $class_names .'>';
 
 			$excerpt = (($item->description) ? $item->description : get_the_excerpt($item->object_id));
 			$title = (($item->attr_title) ? $item->attr_title : get_the_title($item->object_id));
@@ -44,7 +44,7 @@ class WB_Slider_Menu extends Walker_Nav_Menu {
 				$t = "\t";
 				$n = "\n";
 			}
-			$output .= "</li>{$n}";
+			$output .= "</article>{$n}";
 		}
 	}
 }

@@ -43,11 +43,4 @@
 		?>
 	</nav>
 </header>
-<?php if (is_home() || is_front_page()) { wp_nav_menu(array(
-	'theme_location'  => 'main',
-	'container'       => false,
-	'items_wrap'      => '<ul id="%1$s" class="%2$s" annotate-menu=".top-menu">%3$s</ul>',
-	'depth'           => 0,
-	'walker'          => new WB_Slider_Menu()
-));} ?>
 

@@ -12,7 +12,7 @@
 			$directive.link({scope, root, controller});
 
 			controller.menu = $doc.find(controller.annotateMenu + " li").not(".no-annotation");
-			controller.annotations = root.find("li");
+			controller.annotations = root.find("article");
 			nextMenuItem(controller);
 
 			controller.menu.hover(menuHover.bind(controller));
@@ -32,7 +32,7 @@
 		function menuHover(event, controller=this) {
 			if (pause(controller)) {
 				removeHover(controller);
-				controller.currentNode = angular.element(event.target).closest("li");
+				controller.currentNode = angular.element(event.target).closest("article");
 				controller.menu.each((n, item)=>{
 					if (item === controller.currentNode.get(0)) controller.currentNodeNo = n;
 				});
