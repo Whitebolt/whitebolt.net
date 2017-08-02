@@ -43,6 +43,14 @@ body>header {
 			font-size: 55px;
 			line-height: 55px;
 			margin: 0;
+
+			a {
+				color: inherit;
+
+				&:hover {
+					color: $lightGrey;
+				}
+			}
 		}
 
 		ul.top-menu {

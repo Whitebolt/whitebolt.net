@@ -3,7 +3,7 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<base href="/">
+	<base href="<?php echo get_home_url(); ?>/">
 
 	<title><?php if (!is_front_page()) {wp_title('');echo ' | ';} bloginfo('name'); ?></title>
 
@@ -40,7 +40,7 @@
 				'echo'            => false,
 				'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
 				'depth'           => 0
-			)), '<div class="logo">Whitebolt</div>');
+			)), '<div class="logo"><a href="'.get_home_url().'/">Whitebolt</a></div>');
 		?>
 	</nav>
 </header>
