@@ -1,16 +1,14 @@
-(function(global, moduleId, controllerAs){
-	"use strict";
-
-	const angular = global.angular;
+(function(global, moduleId, controllerAs, angular=global.angular){
 
 	angular.module(moduleId).directive(controllerAs, [
 		"$document",
 		"$bolt",
 		"boltDirective",
-		"boltAjax",
+		"$wordpress",
 		"$location",
 		"$compile",
-	($doc, $bolt, $directive, $ajax, $location, $compile)=>{
+	($doc, $bolt, $directive, $wordpress, $location, $compile)=>{
+		"use strict";
 
 		function link(scope, root, attributes, controller) {
 			$directive.link({scope, root, controller});
@@ -27,7 +25,7 @@
 		}
 
 		function onSrcChange(controller=this) {
-			$ajax.getWordpressPage({src: controller.path}).then(
+			$wordpress.getPage({src: controller.path}).then(
 				data=>applyPage(data, controller)
 			);
 		}
@@ -72,6 +70,8 @@
 			link
 		};
 	}]).config(["$locationProvider", ($locationProvider)=>{
+		"use strict";
+
 		$locationProvider.html5Mode({
 			enabled: true,
 			rewriteLinks: true

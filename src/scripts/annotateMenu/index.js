@@ -1,13 +1,12 @@
-(function(global, moduleId, controllerAs){
-	"use strict";
-
-	const angular = global.angular;
+(function(global, moduleId, controllerAs, angular=global.angular) {
 
 	angular.module(moduleId).directive(controllerAs, [
 		"boltDirective",
 		"$document",
 		"$animationInterval",
 	($directive, $doc, $animationInterval)=>{
+		"use strict";
+
 		function link(scope, root, attributes, controller) {
 			$directive.link({scope, root, controller});
 

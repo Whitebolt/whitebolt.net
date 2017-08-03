@@ -37,6 +37,7 @@
       "scripts": [
         "./src/scripts/index.js",
         "./src/scripts/$animationInterval.js",
+        "./src/scripts/$wordpress.js",
         "./src/scripts/moveOn.js",
         "./src/scripts/resizer.js",
         "./src/scripts/app/index.js",

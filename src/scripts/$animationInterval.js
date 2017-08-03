@@ -1,11 +1,10 @@
-(function(global, moduleId, serviceName) {
-	"use strict";
-
-	const angular = global.angular;
+(function(global, moduleId, serviceName, angular=global.angular) {
 
 	angular.module(moduleId).service(serviceName, [
 		"$window",
 	($win)=>{
+		"use strict";
+
 		let requestAnimationFrame = $win.requestAnimationFrame || $win.mozRequestAnimationFrame || $win.webkitRequestAnimationFrame || $win.msRequestAnimationFrame || function(f){return setTimeout(f, 1000/60)};
 		let intervalCallbacks = new Set();
 
