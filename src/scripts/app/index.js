@@ -3,7 +3,7 @@
 
 	const angular = global.angular;
 
-	angular.module("wb").directive("body", [
+	angular.module("wb").directive(controllerAs, [
 		"boltDirective",
 	($directive)=>{
 
@@ -16,7 +16,7 @@
 		}
 
 		return {
-			restrict: "E",
+			restrict: "A",
 			controllerAs,
 			scope: true,
 			controller: [bodyController],

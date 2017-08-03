@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> class="no-js svg" style="margin:0 !important;">
+<html <?php language_attributes(); ?> class="no-js svg" style="margin:0 !important;" app="wb">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +29,7 @@
 	if (!empty($body_style)) $body_style = ' style="' . $body_style . '"';
 ?>
 
-<body app="wb" <?php body_class($body_class); echo $body_style;?>>
+<body <?php body_class($body_class); echo $body_style;?>>
 <header>
 	<nav class="row">
 		<?php
