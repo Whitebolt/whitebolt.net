@@ -47,7 +47,7 @@
 		function applyTitle(page, controller) {
 			let titleParts = controller.pageTitle.text().split("|").map(item=>item.trim());
 			let blogTitle = ((titleParts.length > 1) ? titleParts.pop() : (titleParts[0] || ""));
-			let title = [page.title, blogTitle].filter(item=>(item.trim() !== "")).join(" | ");
+			let title = [page[0].title, blogTitle].filter(item=>(item.trim() !== "")).join(" | ");
 			controller.pageTitle.html(title);
 		}
 

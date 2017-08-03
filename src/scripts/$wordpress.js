@@ -17,10 +17,14 @@
 				url,
 				params: {slug}
 			}).then(res=>{
-				if (res && res.data && res.data.length) return {
-					title: res.data[0].title.rendered,
-					content: res.data[0].content.rendered
-				};
+				if (res && res.data && res.data.length) {
+					return res.data.map(page=>{
+						return {
+							title: page.title.rendered,
+							content: page.content.rendered
+						}
+					});
+				}
 				console.error(res.data);
 				throw options.incorrectDataError || "Incorrect data returned";
 			});
