@@ -10,12 +10,12 @@
 			'walker'          => new WB_Slider_Menu()
 		)); ?>
 	<?php } ?>
-	<div class="articles">
+	<script type="template" id="articleTemplate">
+		<?php get_template_part('article'); ?>
+	</script>
+	<div class="articles" bind-node="app.articleNodes">
 		<?php while ( have_posts() ) : the_post(); ?>
-			<article class="page row">
-				<?php get_template_part('title'); ?>
-				<div bind-node="app.articleContent"><?php the_content(); ?></div>
-			</article>
+			<?php get_template_part('article'); ?>
 		<?php endwhile; ?>
 	</div>
 </main>

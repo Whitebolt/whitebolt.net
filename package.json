@@ -36,6 +36,7 @@
       "scriptsWatch": "./src/*/*.js",
       "scripts": [
         "./src/scripts/index.js",
+        "./src/scripts/$wbtemplates.js",
         "./src/scripts/$animationInterval.js",
         "./src/scripts/$wordpress.js",
         "./src/scripts/moveOn.js",

@@ -5,7 +5,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<base href="<?php echo get_home_url(); ?>/">
 
-	<title><?php if (!is_front_page()) {wp_title('');echo ' | ';} bloginfo('name'); ?></title>
+	<title bind-node="app.pageTitle"><?php if (!is_front_page()) {
+			wp_title('');
+			echo ' | ';
+		}
+		bloginfo('name');
+	?></title>
 
 	<meta name="theme-color" content="#646464">
 	<meta name="msapplication-navbutton-color" content="#646464">

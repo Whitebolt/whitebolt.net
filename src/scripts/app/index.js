@@ -7,7 +7,9 @@
 		"$wordpress",
 		"$location",
 		"$compile",
-	($doc, $bolt, $directive, $wordpress, $location, $compile)=>{
+		"$wbtemplates",
+		"$interpolate",
+	($doc, $bolt, $directive, $wordpress, $location, $compile, $templates, $interpolate)=>{
 		"use strict";
 
 		function link(scope, root, attributes, controller) {
@@ -30,25 +32,32 @@
 			);
 		}
 
-		function applyNodes(nodeMap, page, controller) {
-			Object.keys(nodeMap).forEach(nodeRef=>{
-				let node = controller.parent.app[nodeRef];
-				if (node) {
-					$directive.destroyChildren(node);
-					node.empty();
-					node.html(page[nodeMap[nodeRef]] || "");
-					$compile(node.contents())(controller.current);
-				}
-			})
+		function applyArticle(page, controller, articles=controller.articleNodes) {
+			let articleContent = '';
+
+			$directive.destroyChildren(articles);
+			articles.empty();
+			$bolt.makeArray(page).forEach(page=>{
+				articleContent += $interpolate(controller.articleTemplate)(page);
+			});
+			articles.html(articleContent);
+			$compile(articles.contents())(controller.current);
+		}
+
+		function applyTitle(page, controller) {
+			let titleParts = controller.pageTitle.text().split("|").map(item=>item.trim());
+			let blogTitle = ((titleParts.length > 1) ? titleParts.pop() : (titleParts[0] || ""));
+			let title = [page.title, blogTitle].filter(item=>(item.trim() !== "")).join(" | ");
+			controller.pageTitle.html(title);
 		}
 
 		function applyPage(page, controller) {
 			if (controller.current) controller.current.$destroy();
 			controller.current = controller.parent.$new();
-			applyNodes({
-				pageHeading: "title",
-				articleContent: "content"
-			}, page, controller);
+
+			applyArticle(page, controller);
+			applyTitle(page, controller);
+
 			if (controller.path === "/") {
 				angular.element("body").addClass("home");
 			} else {
@@ -60,6 +69,7 @@
 			let controller = this;
 
 			controller.path = $location.path();
+			controller.articleTemplate = $templates.get('articleTemplate');
 		}
 
 		return {
