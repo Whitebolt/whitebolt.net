@@ -1,9 +1,9 @@
-(function(global, controllerAs){
+(function(global, moduleId, controllerAs){
 	"use strict";
 
 	const angular = global.angular;
 
-	angular.module("wb").directive(controllerAs, [
+	angular.module(moduleId).directive(controllerAs, [
 		"boltDirective",
 		"$document",
 		"$animationInterval",
@@ -84,4 +84,4 @@
 			}
 		};
 	}]);
-})(window, "annotateMenu");
+})(window, "wb", "annotateMenu");
