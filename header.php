@@ -30,8 +30,8 @@
 ?>
 
 <body app="wb" <?php body_class($body_class); echo $body_style;?>>
-<header class="row">
-	<nav>
+<header>
+	<nav class="row">
 		<?php
 			echo split_menu(wp_nav_menu(array(
 				'theme_location'  => 'main',

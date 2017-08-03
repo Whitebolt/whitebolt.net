@@ -1,6 +1,9 @@
 @import "../../lib/foundation-sites/scss/settings/_settings";
 
 $spacer: 10px;
+$headerHeight: $spacer*7.5;
+$themeRadius: $spacer;
+$themePadding: $spacer*2;
 
 $jet: rgba(45, 45, 45, 1);
 $grey: rgba(220, 220, 220, 1);
@@ -13,6 +16,8 @@ $overlayBackground: rgba($black, 0.7);
 $bodyBackround: $grey;
 $footerBackground: $black;
 $contentBackground: $white;
+
+$boldWeight: 600;
 
 @mixin overlay() {
 	background-color: $overlayBackground;
