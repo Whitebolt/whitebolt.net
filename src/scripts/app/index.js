@@ -44,6 +44,12 @@
 			$compile(articles.contents())(controller.current);
 		}
 
+		function applyBodyClasses(page, controller) {
+			controller.root.find("body")
+				.removeAttr("class")
+				.attr("class", page[0].body_classes.join(' '));
+		}
+
 		function applyTitle(page, controller) {
 			let titleParts = controller.pageTitle.text().split("|").map(item=>item.trim());
 			let blogTitle = ((titleParts.length > 1) ? titleParts.pop() : (titleParts[0] || ""));
@@ -57,6 +63,7 @@
 
 			applyArticle(page, controller);
 			applyTitle(page, controller);
+			applyBodyClasses(page, controller);
 
 			if (controller.path === "/") {
 				angular.element("body").addClass("home");

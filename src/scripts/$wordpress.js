@@ -12,14 +12,26 @@
 			let url = apiUrl + "/pages";
 			let slug = options.src;
 
-			return $http({
+			console.log("GET", {
 				method: "get",
 				url,
 				params: {slug}
+			});
+
+			return $http({
+				method: "get",
+				url,
+				params: {slug},
+				headers: {
+					'X-SERVER-SELECT': 'moses',
+					'X-WP-Nonce': global.wpApiSettings.nonce
+				}
 			}).then(res=>{
+				console.log("RESPONSE", res);
 				if (res && res.data && res.data.length) {
 					return res.data.map(page=>{
 						return {
+							body_classes: page.body_classes,
 							title: page.title.rendered,
 							content: page.content.rendered
 						}
