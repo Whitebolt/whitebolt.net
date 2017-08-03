@@ -10,7 +10,7 @@
 			'walker'          => new WB_Slider_Menu()
 		)); ?>
 	<?php } ?>
-	<div class="articles" wordpress-loader>
+	<div class="articles">
 		<?php while ( have_posts() ) : the_post(); ?>
 			<article class="page row">
 				<?php get_template_part('title'); ?>
