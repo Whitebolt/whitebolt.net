@@ -39,7 +39,7 @@
 			$directive.destroyChildren(articles);
 			articles.empty();
 
-			if (articlesData.length > 1) {
+			if (((data.title || "").trim() !== "") || ((data.content || "").trim() !== "")) {
 				let innerArticleTemplate = angular.element(controller.articleTemplate).html();
 				articleContent += $interpolate(innerArticleTemplate)(data);
 			}

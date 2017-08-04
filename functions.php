@@ -21,11 +21,14 @@ function wb_enqueue() {
 	$blog_slug = '/' . get_post_field( 'post_name', get_option( 'page_for_posts' )) . '/';
 	if ((int) get_option( 'page_on_front' ) === (int) get_option( 'page_for_posts' )) $blog_slug = '/';
 
+
 	wp_localize_script('wb', 'wpRestApiSettings', array(
 		'nonce' => wp_create_nonce( 'wp_rest' ),
 		'homepageId' => get_option( 'page_on_front' ),
 		'homepageSlug' => '/',
-		'blogSlug' => $blog_slug
+		'blogSlug' => $blog_slug,
+		'category_base' => empty(get_option( 'category_base' ))?'category':get_option( 'category_base' ),
+		'tag_base' => empty(get_option( 'tag_base' ))?'post_tag':get_option( 'tag_base' )
 	));
 
 	wb_enqueuer('style', array('foundation', 'font-awesome', 'main'));
