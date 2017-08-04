@@ -83,8 +83,8 @@
 					let articles = data.map(data=>{
 						return {
 							title: data.title.rendered,
-							content: data.content.rendered,
-							excerpt: data.excerpt.rendered,
+							content: (data.content || data.description).rendered,
+							excerpt: (data.excerpt || data.caption).rendered,
 							post_class: data.post_class
 						}
 					});
@@ -109,6 +109,8 @@
 			let slugParts = slug.split('/').filter(part=>part.trim());
 			let slugBase = slugParts.shift();
 			let slugMain = slugParts.join('/');
+
+			if (slugParts.length > 0) slug = "/" + slugParts[slugParts.length-1] + "/";
 
 			if (slug === apiSettings.blogSlug) {
 				return _apiGetData("pages", {slug}).then(page=> _apiGetData("posts", {}, {
@@ -140,8 +142,11 @@
 			if (slug === apiSettings.homepageSlug) {
 				return _apiGetData("pages", {id: apiSettings.homepageId});
 			} else {
+				console.log(slug, slugParts);
 				return _apiGetData("pages", {slug}).then(data=>
 					(data ? data : _apiGetData("posts", {slug}))
+				).then(data=>
+					(data ? data : _apiGetData("media", {slug}))
 				);
 			}
 		}
