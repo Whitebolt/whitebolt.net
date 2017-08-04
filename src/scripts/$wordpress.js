@@ -42,8 +42,6 @@
 					console.log("DATA", data);
 					return data;
 				}
-				console.error(res.data);
-				throw options.incorrectDataError || "Incorrect data returned";
 			});
 		}
 
@@ -63,7 +61,9 @@
 			} else if (slug === apiSettings.homepageSlug) {
 				return _apiQuery("pages", {id: apiSettings.homepageId});
 			} else {
-				return _apiQuery("pages", {slug});
+				return _apiQuery("pages", {slug}).then(data=>
+					(data ? data : _apiQuery("posts", {slug}))
+				);
 			}
 		}
 
