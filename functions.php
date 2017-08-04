@@ -18,14 +18,15 @@ function wb_enqueue() {
 	wb_register_lib('angular', '/angular/angular', '1.6.5', array('jquery'));
 	wb_register_script('wb', '/index', array('jquery', 'foundation', 'angular'));
 
-	wp_localize_script('wp-api', 'wpApiSettings', array(
-		'root' => esc_url_raw( rest_url() ),
-		'nonce' => wp_create_nonce( 'wp_rest' )
+	wp_localize_script('wb', 'wpRestApiSettings', array(
+		'nonce' => wp_create_nonce( 'wp_rest' ),
+		'homepageId' => get_option( 'page_on_front' ),
+		'homepageSlug' => '/',
+		'blogSlug' => '/' . get_post_field( 'post_name', get_option( 'page_for_posts' )) . '/'
 	));
 
 	wb_enqueuer('style', array('foundation', 'font-awesome', 'main'));
 	wb_enqueuer('script', array(
-		'wp-api',
 		'jquery',
 		'what-input',
 		'foundation',
@@ -64,8 +65,10 @@ function wb_set_body_background_image($styles, $id=null) {
 add_filter('body_style', 'wb_set_body_background_image', 10, 2);
 
 function wb_set_body_cover_class($classes, $id=null) {
-	$image_url = wb_get_background_image($id);
-	if (!empty($image_url)) $classes[] = 'cover-image';
+	if (!in_array('cover-image', $classes)) {
+		$image_url = wb_get_background_image($id);
+		if (!empty($image_url)) $classes[] = 'cover-image';
+	}
 	return $classes;
 }
 add_filter('rest_api_body_classes', 'wb_set_body_cover_class', 10, 2);
@@ -76,7 +79,10 @@ function wb_add_classes_to_api() {
 		'get_callback' => function( $data ) {
 			$classes = [];
 
-			if ($data['is-front-page'] === true) $classes[] = 'home';
+			FB::log($data['id']);
+			FB::log(get_option('page_on_front'));
+
+			if ($data['id'] === (int) get_option('page_on_front')) $classes[] = 'home';
 			if ($data['type']) {
 				$classes[] = $data['type'] . '-template-default';
 				$classes[] = $data['type'];

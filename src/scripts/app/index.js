@@ -27,52 +27,59 @@
 		}
 
 		function onSrcChange(controller=this) {
-			$wordpress.getPage({src: controller.path}).then(
+			$wordpress.getContent({src: controller.path}).then(
 				data=>applyPage(data, controller)
 			);
 		}
 
-		function applyArticle(page, controller, articles=controller.articleNodes) {
+		function applyArticles(data, controller, articles=controller.articleNodes) {
 			let articleContent = '';
+			let articlesData = $bolt.makeArray(data.articles);
 
 			$directive.destroyChildren(articles);
 			articles.empty();
-			$bolt.makeArray(page).forEach(page=>{
-				articleContent += $interpolate(controller.articleTemplate)(page);
+
+			if (articlesData.length > 1) {
+				let innerArticleTemplate = angular.element(controller.articleTemplate).html();
+				articleContent += $interpolate(innerArticleTemplate)(data);
+			}
+			articlesData.forEach(article=>{
+				articleContent += $interpolate(controller.articleTemplate)(article);
 			});
+
 			articles.html(articleContent);
 			$compile(articles.contents())(controller.current);
 		}
 
-		function applyBodyClass(page, controller) {
+		function applyBodyClass(data, controller) {
 			controller.root.find("body")
 				.removeAttr("class")
-				.attr("class", page[0].body_class.join(' '));
+				.attr("class", data.body_class.join(' '));
 		}
 
-		function applyBodyStyle(page, controller) {
+		function applyBodyStyle(data, controller) {
 			controller.root.find("body")
 				.removeAttr("style")
-				.attr("style", Object.keys(page[0].body_style).map(prop=>
-					prop + ': ' + page[0].body_style[prop] + ';'
+				.attr("style", Object.keys(data.body_style).map(prop=>
+					prop + ': ' + data.body_style[prop] + ';'
 				).join());
 		}
 
-		function applyTitle(page, controller) {
+		function applyTitle(data, controller) {
 			let titleParts = controller.pageTitle.text().split("|").map(item=>item.trim());
 			let blogTitle = ((titleParts.length > 1) ? titleParts.pop() : (titleParts[0] || ""));
-			let title = [page[0].title, blogTitle].filter(item=>(item.trim() !== "")).join(" | ");
+			let title = [data.title, blogTitle].filter(item=>(item.trim() !== "")).join(" | ");
 			controller.pageTitle.html(title);
 		}
 
-		function applyPage(page, controller) {
+		function applyPage(data, controller) {
 			if (controller.current) controller.current.$destroy();
 			controller.current = controller.parent.$new();
 
-			applyArticle(page, controller);
-			applyTitle(page, controller);
-			applyBodyClass(page, controller);
-			applyBodyStyle(page, controller);
+			applyArticles(data, controller);
+			applyTitle(data, controller);
+			applyBodyClass(data, controller);
+			applyBodyStyle(data, controller);
 
 			if (controller.path === "/") {
 				angular.element("body").addClass("home");

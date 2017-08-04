@@ -7,43 +7,65 @@
 		"use strict";
 
 		let apiUrl = angular.element("[rel='https://api.w.org/']").attr("href") + "wp/v2";
+		let apiSettings = global.wpRestApiSettings;
 
-		function getPage(options) {
-			let url = apiUrl + "/pages";
-			let slug = options.src;
-
-			console.log("GET", {
-				method: "get",
-				url,
-				params: {slug}
-			});
+		function _apiQuery(endpoint, params) {
+			let url = apiUrl + "/" + endpoint;
 
 			return $http({
 				method: "get",
 				url,
-				params: {slug},
+				params,
 				headers: {
 					'X-SERVER-SELECT': 'moses',
-					'X-WP-Nonce': global.wpApiSettings.nonce
+					'X-WP-Nonce': apiSettings.nonce
 				} }).then(res=>{
 				console.log("RESPONSE", res);
 				if (res && res.data && res.data.length) {
-					return res.data.map(page=>{
+					let articles = res.data.map(data=>{
 						return {
-							body_class: page.body_class,
-							body_style: page.body_style,
-							title: page.title.rendered,
-							content: page.content.rendered
+							title: data.title.rendered,
+							content: data.content.rendered
 						}
 					});
+
+					let data = {
+						title: res.data[0].title.rendered,
+						content: '',
+						body_class: res.data[0].body_class,
+						body_style: res.data[0].body_style,
+						articles
+					};
+
+					console.log("DATA", data);
+					return data;
 				}
 				console.error(res.data);
 				throw options.incorrectDataError || "Incorrect data returned";
 			});
 		}
 
+		function getContent(options) {
+			let slug = options.src;
+
+			if (slug === apiSettings.blogSlug) {
+				return _apiQuery("pages", {slug}).then(page=>{
+					return _apiQuery("posts", {}).then(posts=>{
+						return Object.assign(posts, {
+							title: page.title,
+							content: page.articles[0].content
+						});
+					});
+				});
+			} else if (slug === apiSettings.homepageSlug) {
+				return _apiQuery("pages", {id: apiSettings.homepageId});
+			} else {
+				return _apiQuery("pages", {slug});
+			}
+		}
+
 		return {
-			getPage
+			getContent
 		};
 	}]);
 
