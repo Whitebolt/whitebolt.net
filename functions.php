@@ -18,11 +18,14 @@ function wb_enqueue() {
 	wb_register_lib('angular', '/angular/angular', '1.6.5', array('jquery'));
 	wb_register_script('wb', '/index', array('jquery', 'foundation', 'angular'));
 
+	$blog_slug = '/' . get_post_field( 'post_name', get_option( 'page_for_posts' )) . '/';
+	if ((int) get_option( 'page_on_front' ) === (int) get_option( 'page_for_posts' )) $blog_slug = '/';
+
 	wp_localize_script('wb', 'wpRestApiSettings', array(
 		'nonce' => wp_create_nonce( 'wp_rest' ),
 		'homepageId' => get_option( 'page_on_front' ),
 		'homepageSlug' => '/',
-		'blogSlug' => '/' . get_post_field( 'post_name', get_option( 'page_for_posts' )) . '/'
+		'blogSlug' => $blog_slug
 	));
 
 	wb_enqueuer('style', array('foundation', 'font-awesome', 'main'));
