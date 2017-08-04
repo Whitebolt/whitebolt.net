@@ -44,10 +44,18 @@
 			$compile(articles.contents())(controller.current);
 		}
 
-		function applyBodyClasses(page, controller) {
+		function applyBodyClass(page, controller) {
 			controller.root.find("body")
 				.removeAttr("class")
-				.attr("class", page[0].body_classes.join(' '));
+				.attr("class", page[0].body_class.join(' '));
+		}
+
+		function applyBodyStyle(page, controller) {
+			controller.root.find("body")
+				.removeAttr("style")
+				.attr("style", Object.keys(page[0].body_style).map(prop=>
+					prop + ': ' + page[0].body_style[prop] + ';'
+				).join());
 		}
 
 		function applyTitle(page, controller) {
@@ -63,7 +71,8 @@
 
 			applyArticle(page, controller);
 			applyTitle(page, controller);
-			applyBodyClasses(page, controller);
+			applyBodyClass(page, controller);
+			applyBodyStyle(page, controller);
 
 			if (controller.path === "/") {
 				angular.element("body").addClass("home");

@@ -21,20 +21,8 @@
 	<?php if (get_theme_mod( 'google_analytics' )) include_once("inc/analyticstracking.php"); ?>
 	<?php wp_head(); ?>
 </head>
-<?php
-	$image_url  = types_render_field( 'background-image', array('url' => true));
-	if (empty($image_url)) $image_url = get_theme_mod('default_background');
-	$body_class = array();
-	$body_style = '';
-	if (!empty($image_url)) {
-		$body_style .= 'background-image:url(\'' . $image_url . '\');';
-		array_push($body_class, 'cover-image');
-	}
 
-	if (!empty($body_style)) $body_style = ' style="' . $body_style . '"';
-?>
-
-<body <?php body_class($body_class); echo $body_style;?>>
+<body <?php body_class(); body_style();?>>
 <header>
 	<nav class="row">
 		<?php

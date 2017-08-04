@@ -25,13 +25,13 @@
 				headers: {
 					'X-SERVER-SELECT': 'moses',
 					'X-WP-Nonce': global.wpApiSettings.nonce
-				}
-			}).then(res=>{
+				} }).then(res=>{
 				console.log("RESPONSE", res);
 				if (res && res.data && res.data.length) {
 					return res.data.map(page=>{
 						return {
-							body_classes: page.body_classes,
+							body_class: page.body_class,
+							body_style: page.body_style,
 							title: page.title.rendered,
 							content: page.content.rendered
 						}

@@ -35,32 +35,80 @@ function wb_enqueue() {
 }
 add_action( 'wp_enqueue_scripts', 'wb_enqueue' );
 
-function wp_add_classes_to_api() {
-	register_rest_field('page', 'body_classes', array(
-		'get_callback' => function( $page ) {
+function body_style($styles=array()) {
+	$styles = apply_filters('body_style', $styles);
+	if (!empty($styles)) {
+		$html = ' style="';
+		foreach($styles as $prop => $value) $html .= $prop . ': ' . $value . ';';
+		echo $html . '"';
+	}
+	echo '';
+}
 
+function wb_get_background_image($id=null) {
+	if (is_null($id)) $id = get_the_ID();
+	$image_url  = get_post_meta($id, 'wpcf-background-image');
+	if (empty($image_url)) {
+		$image_url = get_theme_mod('default_background');
+	} else {
+		$image_url = array_shift($image_url);
+	}
+	return $image_url;
+}
+
+function wb_set_body_background_image($styles, $id=null) {
+	$image_url  = wb_get_background_image($id);
+	if (!empty($image_url)) $styles['background-image'] = 'url(\'' . $image_url . '\')';
+	return $styles;
+}
+add_filter('body_style', 'wb_set_body_background_image', 10, 2);
+
+function wb_set_body_cover_class($classes, $id=null) {
+	$image_url = wb_get_background_image($id);
+	if (!empty($image_url)) $classes[] = 'cover-image';
+	return $classes;
+}
+add_filter('rest_api_body_classes', 'wb_set_body_cover_class', 10, 2);
+add_filter('body_class', 'wb_set_body_cover_class', 10, 2);
+
+function wb_add_classes_to_api() {
+	register_rest_field(['page', 'post'], 'body_class', array(
+		'get_callback' => function( $data ) {
 			$classes = [];
-			$classes[] = 'page-template-default';
-			$classes[] = 'page';
-			$classes[] = 'page-id-' . $page['id'];
-			if (is_rtl()) $classes[] = 'rtl';
-			if (is_user_logged_in()) $classes[] = 'logged-in';
-			if ( is_admin_bar_showing() ) {
-				$classes[] = 'admin-bar';
-				$classes[] = 'no-customize-support';
+
+			if ($data['is-front-page'] === true) $classes[] = 'home';
+			if ($data['type']) {
+				$classes[] = $data['type'] . '-template-default';
+				$classes[] = $data['type'];
+				if ($data['id']) $classes[] = $data['type'] . '-id-' . $data['id'];
 			}
+			if (is_rtl()) $classes[] = 'rtl';
+			$classes = apply_filters( 'rest_api_body_classes', array_merge(
+				$classes,
+				get_body_class()
+			), $data['id']);
 
-			$image_url  = get_post_meta($page['id'], 'wpcf-background-image');
-			if (empty($image_url)) $image_url = get_theme_mod('default_background');
-			if (!empty($image_url)) $classes[] = 'cover-image';
+			FB::log($classes);
 
-			return $classes;
+			return array_unique($classes);
 		},
 		'schema' => array(
 			'description' => __( 'body classes' ),
 			'type'        => 'array'
 		)
 	));
+
+	register_rest_field(['page', 'post'], 'body_style', array(
+		'get_callback' => function( $data ) {
+			$styles = [];
+			$styles = apply_filters( 'body_style', $styles, $data['id']);
+			return array_unique($styles);
+		},
+		'schema' => array(
+			'description' => __( 'body styles' ),
+			'type'        => 'array'
+		)
+	));
 }
-add_action( 'rest_api_init', 'wp_add_classes_to_api' );
+add_action( 'rest_api_init', 'wb_add_classes_to_api' );
 ?>
