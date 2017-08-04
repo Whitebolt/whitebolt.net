@@ -43,11 +43,16 @@
 				let innerArticleTemplate = angular.element(controller.articleTemplate).html();
 				articleContent += $interpolate(innerArticleTemplate)(data);
 			}
+			if (articleContent.trim() === "") {
+				data.articles_class.unshift('articles-no-intro');
+			}
 			articlesData.forEach(article=>{
 				articleContent += $interpolate(controller.articleTemplate)(article);
 			});
 
 			articles.html(articleContent);
+
+			articles.removeAttr('class').attr('class', data.articles_class.join(' '));
 			$compile(articles.contents())(controller.current);
 		}
 

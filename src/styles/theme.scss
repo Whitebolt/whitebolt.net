@@ -183,6 +183,18 @@ body.home annotate-menu, body.home [annotate-menu] {
 	article {
 		margin: $themePadding;
 		font-size: 1.1rem;
+		border-top: 1px solid $darkGrey;
+		padding-top: $themePadding;
+
+		&:only-of-type {
+			border-top: none;
+			padding-top: 0;
+		}
+
+		& &.articles-no-intro {
+			border-top: none;
+			padding-top: 0;
+		}
 	}
 }
 

@@ -115,6 +115,16 @@ function wb_add_classes_to_api() {
 			'type'        => 'array'
 		)
 	));
+
+	register_rest_field(['page', 'post'], 'post_class', array(
+		'get_callback' => function( $data ) {
+			return get_post_class('', $data['id']);
+		},
+		'schema' => array(
+			'description' => __( 'post classes' ),
+			'type'        => 'array'
+		)
+	));
 }
 add_action( 'rest_api_init', 'wb_add_classes_to_api' );
 ?>

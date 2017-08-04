@@ -25,13 +25,15 @@
 					let articles = res.data.map(data=>{
 						return {
 							title: data.title.rendered,
-							content: data.content.rendered
+							content: data.content.rendered,
+							post_class: data.post_class
 						}
 					});
 
 					let data = {
 						title: res.data[0].title.rendered,
 						content: '',
+						articles_class: ['articles'],
 						body_class: res.data[0].body_class,
 						body_style: res.data[0].body_style,
 						articles
@@ -52,6 +54,7 @@
 				return _apiQuery("pages", {slug}).then(page=>{
 					return _apiQuery("posts", {}).then(posts=>{
 						return Object.assign(posts, {
+							articles_class: page.articles_class.concat(page.articles[0].post_class),
 							title: page.title,
 							content: page.articles[0].content
 						});

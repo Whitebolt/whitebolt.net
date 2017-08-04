@@ -1,4 +1,4 @@
-<article class="page row">
+<article class="<?php echo defined('ARTICLE_TEMPLATE_DONE') ? implode(' ', get_post_class()) : "{{post_class.join(' ')}}"; ?>">
 	<?php get_template_part('title'); ?>
 	<?php if (defined('ARTICLE_TEMPLATE_DONE')) {
 		the_content();
