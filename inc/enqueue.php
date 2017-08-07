@@ -26,6 +26,15 @@ function wb_register_script($name, $path, $deps=array(), $version=PIY_VERSION, $
 	wp_register_script( $name, $src, $deps, $version, $footer );
 }
 
+function wb_register_template($name, $path, $deps=array(), $version=PIY_VERSION, $footer=true) {
+	$src = PIY_ANGULAR_TEMPLATE_DIR . $path;
+	if (!PIY_PAGESPEED) {
+		$src = wb_add_query_param($src, 'ModPagespeed', 'off');
+		$src = wb_add_query_param($src, 'cacheBust', (string) rand());
+	}
+	wp_register_script( $name.'.html', $src, $deps, $version, $footer );
+}
+
 function wb_enqueuer($type, $items) {
 	foreach($items as $item) {
 		if ($type == 'script') {

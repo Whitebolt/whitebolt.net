@@ -1,9 +1,4 @@
-<article class="<?php echo defined('ARTICLE_TEMPLATE_DONE') ? implode(' ', get_post_class()) : "{{post_class.join(' ')}}"; ?>">
+<article class="<?php echo implode(' ', get_post_class()); ?>">
 	<?php get_template_part('title'); ?>
-	<?php if (defined('ARTICLE_TEMPLATE_DONE')) {
-		the_content();
-	} else {
-		echo '{{content}}';
-	}?>
+	<?php the_content(); ?>
 </article>
-<?php if (!defined('ARTICLE_TEMPLATE_DONE')) define('ARTICLE_TEMPLATE_DONE', true); ?>

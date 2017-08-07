@@ -36,24 +36,25 @@
 			let articleContent = '';
 			let articlesData = $bolt.makeArray(data.articles);
 
-			$directive.destroyChildren(articles);
-			articles.empty();
+			$templates.get("article.html").then(articleTemplate=>{
+				$directive.destroyChildren(articles);
+				articles.empty();
 
-			if (((data.title || "").trim() !== "") || ((data.content || "").trim() !== "")) {
-				let innerArticleTemplate = angular.element(controller.articleTemplate).html();
-				articleContent += $interpolate(innerArticleTemplate)(data);
-			}
-			if (articleContent.trim() === "") {
-				data.articles_class.unshift('articles-no-intro');
-			}
-			articlesData.forEach(article=>{
-				articleContent += $interpolate(controller.articleTemplate)(article);
+				if (((data.title || "").trim() !== "") || ((data.content || "").trim() !== "")) {
+					let innerArticleTemplate = angular.element(articleTemplate).html();
+					articleContent += $interpolate(innerArticleTemplate)(data);
+				}
+				if (articleContent.trim() === "") {
+					data.articles_class.unshift('articles-no-intro');
+				}
+				articlesData.forEach(article=>{
+					articleContent += $interpolate(articleTemplate)(article);
+				});
+
+				articles.html(articleContent);
+				articles.removeAttr('class').attr('class', data.articles_class.join(' '));
+				$compile(articles.contents())(controller.current);
 			});
-
-			articles.html(articleContent);
-
-			articles.removeAttr('class').attr('class', data.articles_class.join(' '));
-			$compile(articles.contents())(controller.current);
 		}
 
 		function applyBodyClass(data, controller) {
@@ -81,6 +82,7 @@
 			if (controller.current) controller.current.$destroy();
 			controller.current = controller.parent.$new();
 
+
 			applyArticles(data, controller);
 			applyTitle(data, controller);
 			applyBodyClass(data, controller);
@@ -97,7 +99,6 @@
 			let controller = this;
 
 			controller.path = $location.path();
-			controller.articleTemplate = $templates.get('articleTemplate');
 		}
 
 		return {

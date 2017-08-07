@@ -8,9 +8,6 @@
 		'depth'           => 0,
 		'walker'          => new WB_Slider_Menu()
 	)); ?>
-	<script type="template" id="articleTemplate">
-		<?php get_template_part('article'); ?>
-	</script>
 	<?php
 		$articlesClass = [];
 		if ((is_front_page() && is_home()) || (!is_front_page() && is_home())) {

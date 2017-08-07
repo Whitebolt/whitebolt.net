@@ -18,6 +18,8 @@ function wb_enqueue() {
 	wb_register_lib('angular', '/angular/angular', '1.6.5', array('jquery'));
 	wb_register_script('wb', '/index', array('jquery', 'foundation', 'angular'));
 
+	wb_register_template('article', '/article.html', '0.0.1', array('angular'));
+
 	$blog_slug = '/' . get_post_field( 'post_name', get_option( 'page_for_posts' )) . '/';
 	if ((int) get_option( 'page_on_front' ) === (int) get_option( 'page_for_posts' )) $blog_slug = '/';
 
@@ -37,7 +39,8 @@ function wb_enqueue() {
 		'what-input',
 		'foundation',
 		'angular',
-		'wb'
+		'wb',
+		'article.html'
 	));
 }
 add_action( 'wp_enqueue_scripts', 'wb_enqueue' );
@@ -79,6 +82,15 @@ function wb_set_body_cover_class($classes, $id=null) {
 }
 add_filter('rest_api_body_classes', 'wb_set_body_cover_class', 10, 2);
 add_filter('body_class', 'wb_set_body_cover_class', 10, 2);
+
+function wb_script_loader( $tag, $handle, $src ) {
+	if (strstr($handle, '.html')) {
+		$tag = str_replace( 'text/javascript', 'angular/template', $tag );
+		$tag = str_replace( '<script', '<script id="'.$handle.'"', $tag );
+	}
+	return $tag;
+}
+add_filter( 'script_loader_tag', 'wb_script_loader', 10, 3 );
 
 function wb_add_classes_to_api() {
 	register_rest_field(['page', 'post'], 'body_class', array(
