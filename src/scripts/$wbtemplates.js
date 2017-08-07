@@ -34,23 +34,30 @@
 					}
 
 					let templateNodeRef = angular.element(script.get(0));
-					let loader = $http.get(templateNodeRef.attr("src")).then(res=>{
-						if (res && res.data) {
-							templates.set(name, res.data);
-						} else {
-							templates.set(name, new Error(`Template ${name} returned no data.`));
-						}
-						return fireCallbacks(loader);
-					}, ()=>{
-						templates.set(name, new Error(`Template ${name} returned an error.`));
-						return fireCallbacks(loader);
-					}).then(()=>{
-						loader = undefined;
-					});
+					let src = templateNodeRef.attr("src");
 
-					callbacks.set(loader, new Set());
-					addCallback(name, loader, {resolve, reject});
-					templates.set(name, loader);
+					if (src !== "") {
+						let loader = $http.get(templateNodeRef.attr("src")).then(res=>{
+							if (res && res.data) {
+								templates.set(name, res.data);
+							} else {
+								templates.set(name, new Error(`Template ${name} returned no data.`));
+							}
+							return fireCallbacks(loader);
+						}, ()=>{
+							templates.set(name, new Error(`Template ${name} returned an error.`));
+							return fireCallbacks(loader);
+						}).then(()=>{
+							loader = undefined;
+						});
+
+						callbacks.set(loader, new Set());
+						addCallback(name, loader, {resolve, reject});
+						templates.set(name, loader);
+					} else {
+						templates.set(name, templateNodeRef.text());
+						resolve(templates.get(name));
+					}
 				} else {
 					let template = superGet(name);
 					if (template instanceof Error) return reject(template);
