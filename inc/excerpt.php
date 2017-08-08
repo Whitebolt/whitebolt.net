@@ -5,7 +5,7 @@
  *
  * @ref https://gist.github.com/davidbenton/3658171
  * @author etessore
- * @author
+ * @author ssimpo
  */
 
 /**
@@ -73,7 +73,6 @@ class TinyMceExcerptCustomization{
 	 * @param object $post the post object
 	 */
 	function tinymce_excerpt_box($post){
-		//$content = get_post_meta($post->ID, self::custom_excerpt_slug, true);
 		$content = html_entity_decode($post->post_excerpt);
 		if(empty($content)) $content = '';
 		wp_editor(
@@ -96,7 +95,7 @@ class TinyMceExcerptCustomization{
 		if (isset($_POST[self::custom_excerpt_slug])) {
 			$the_post = get_post($post_id);
 			$the_post->post_excerpt = wp_kses_post( $_POST[self::custom_excerpt_slug]);
-
+			// NB: You might want to use wp_make_content_images_responsive() when displaying your excerpt
 			remove_action('save_post', array($this,'save_box'));
 			wp_update_post( $the_post );
 			add_action('save_post', array($this, 'save_box'));
