@@ -28,7 +28,7 @@ class WB_Slider_Menu extends Walker_Nav_Menu {
 			$title = (($item->attr_title) ? $item->attr_title : get_the_title($item->object_id));
 
 			$output .= '<h2>'.$title.'</h2>';
-			$output .= $excerpt;
+			$output .= wp_make_content_images_responsive($excerpt);
 		}
 	}
 

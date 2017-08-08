@@ -38,7 +38,7 @@ function body_style($styles=array()) {
 }
 
 function wb_get_background_image($id=null) {
-	if (is_null($id)) $id = get_the_ID();
+	if (is_null($id) || empty($id)) $id = get_the_ID();
 	$image_url  = get_post_meta($id, 'wpcf-background-image');
 	if (empty($image_url)) {
 		$image_url = get_theme_mod('default_background');
@@ -51,6 +51,7 @@ function wb_get_background_image($id=null) {
 function wb_set_body_background_image($styles, $id=null) {
 	$image_url  = wb_get_background_image($id);
 	if (!empty($image_url)) $styles['background-image'] = 'url(\'' . $image_url . '\')';
+
 	return $styles;
 }
 add_filter('body_style', 'wb_set_body_background_image', 10, 2);

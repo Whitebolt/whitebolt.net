@@ -5,6 +5,7 @@ require_once('inc/enqueue.php');
 require_once('inc/rest.php');
 require_once('inc/annotate.php');
 require_once('inc/customise.php');
+require_once('inc/excerpt.php');
 require_once('inc/theme.php');
 
 function wb_enqueue() {
@@ -45,4 +46,6 @@ function wb_enqueue() {
 	));
 }
 add_action( 'wp_enqueue_scripts', 'wb_enqueue' );
+
+
 ?>
