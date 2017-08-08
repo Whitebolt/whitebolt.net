@@ -71,13 +71,11 @@
 					'X-WP-Nonce': apiSettings.nonce
 				}
 			}).then(res=>{
-				console.log("RESPONSE", res);
 				if (res && res.data && (res.data.length || Object.keys(res.data).length)) return res.data;
 			});
 		}
 
 		function _apiGetData(endpoint, params, carriedData={}) {
-			console.log("CARRIED DATA", carriedData);
 			return _apiGet(endpoint, params).then(data=>{
 				if (data) {
 					let articles = data.map(data=>{
@@ -98,7 +96,6 @@
 						articles
 					};
 
-					console.log("DATA", returnedData);
 					return returnedData;
 				}
 			});
@@ -142,7 +139,6 @@
 			if (slug === apiSettings.homepageSlug) {
 				return _apiGetData("pages", {id: apiSettings.homepageId});
 			} else {
-				console.log(slug, slugParts);
 				return _apiGetData("pages", {slug}).then(data=>
 					(data ? data : _apiGetData("posts", {slug}))
 				).then(data=>
