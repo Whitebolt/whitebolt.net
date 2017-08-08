@@ -44,4 +44,13 @@ function wb_enqueuer($type, $items) {
 		}
 	}
 }
+
+function wb_script_loader( $tag, $handle, $src ) {
+	if (strstr($handle, '.html')) {
+		$tag = str_replace( 'text/javascript', 'angular/template', $tag );
+		$tag = str_replace( '<script', '<script id="'.$handle.'"', $tag );
+	}
+	return $tag;
+}
+add_filter( 'script_loader_tag', 'wb_script_loader', 10, 3 );
 ?>
