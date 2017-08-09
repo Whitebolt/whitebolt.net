@@ -27,14 +27,20 @@ function split_menu($menu_html, $middle_content) {
 	return str_replace('<li<ul', '<ul', implode('', $items));
 }
 
-function body_style($styles=array()) {
-	$styles = apply_filters('body_style', $styles);
+function main_style($styles=array()) {
+	$styles = apply_filters('main_style', $styles);
 	if (!empty($styles)) {
 		$html = ' style="';
 		foreach($styles as $prop => $value) $html .= $prop . ': ' . $value . ';';
 		echo $html . '"';
 	}
 	echo '';
+}
+
+function main_class($classes=array()) {
+	$classes = (is_array($classes) ? $classes : explode(' ', $classes));
+	$classes = apply_filters( 'main_class', $classes );
+	if (!empty( $classes )) echo ' class="' . str_replace('  ', ' ', implode( ' ', $classes )) . '"';
 }
 
 function wb_get_background_image($id=null) {
@@ -48,21 +54,50 @@ function wb_get_background_image($id=null) {
 	return $image_url;
 }
 
-function wb_set_body_background_image($styles, $id=null) {
+function wb_set_main_background_image($styles, $id=null) {
 	$image_url  = wb_get_background_image($id);
 	if (!empty($image_url)) $styles['background-image'] = 'url(\'' . $image_url . '\')';
 
 	return $styles;
 }
-add_filter('body_style', 'wb_set_body_background_image', 10, 2);
+add_filter('main_style', 'wb_set_main_background_image', 10, 2);
 
-function wb_set_body_cover_class($classes, $id=null) {
+function wb_set_main_cover_class($classes, $id=null) {
+	if (is_null($id) || empty($id)) $id = get_the_ID();
 	if (!in_array('cover-image', $classes)) {
 		$image_url = wb_get_background_image($id);
 		if (!empty($image_url)) $classes[] = 'cover-image';
 	}
 	return $classes;
 }
-add_filter('rest_api_body_classes', 'wb_set_body_cover_class', 10, 2);
-add_filter('body_class', 'wb_set_body_cover_class', 10, 2);
+add_filter('main_class', 'wb_set_main_cover_class', 10, 2);
+
+function wb_set_main_off_canvas_content($classes) {
+	$classes[] = 'off-canvas-content';
+	return $classes;
+}
+add_filter('main_class', 'wb_set_main_off_canvas_content', 10, 2);
+
+function wb_set_body_class_index_page($classes, $id=null) {
+	if (is_null($id) || empty($id)) {
+		if ((is_front_page() && is_home()) || (!is_front_page() && is_home())) {
+			$id = get_option( 'page_for_posts' );
+		} else {
+			$id = get_the_ID();
+		}
+	}
+	$post = get_post($id);
+
+	if ($id === (int) get_option('page_on_front')) $classes[] = 'home';
+	if ($id) {
+		$classes[] = $post->post_type . '-template-default';
+		$classes[] = $post->post_type;
+		if ($id) $classes[] = $post->post_type . '-id-' . $id;
+	}
+	if (is_rtl()) $classes[] = 'rtl';
+	$classes = apply_filters( 'rest_api_body_classes', $classes, $id);
+
+	return array_unique($classes);
+}
+add_filter('body_class', 'wb_set_body_class_index_page', 10, 2);
 ?>

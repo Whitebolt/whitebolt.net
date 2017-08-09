@@ -47,7 +47,18 @@ body, html {
 	}
 }
 
-body.cover-image {
+body .off-canvas-wrapper {
+	height: 100%;
+	width: 100%;
+	overflow: visible;
+
+	.off-canvas-content {
+		height: 100%;
+		width: 100%;
+	}
+}
+
+.cover-image {
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;

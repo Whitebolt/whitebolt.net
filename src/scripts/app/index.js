@@ -63,11 +63,17 @@
 				.attr("class", data.body_class.join(' '));
 		}
 
-		function applyBodyStyle(data, controller) {
-			controller.root.find("body")
+		function applyMainClass(data, controller) {
+			controller.root.find("main")
+				.removeAttr("class")
+				.attr("class", data.main_class.join(' '));
+		}
+
+		function applyMainStyle(data, controller) {
+			controller.root.find("main")
 				.removeAttr("style")
-				.attr("style", Object.keys(data.body_style).map(prop=>
-					prop + ': ' + data.body_style[prop] + ';'
+				.attr("style", Object.keys(data.main_style).map(prop=>
+					prop + ': ' + data.main_style[prop] + ';'
 				).join());
 		}
 
@@ -86,7 +92,8 @@
 			applyArticles(data, controller);
 			applyTitle(data, controller);
 			applyBodyClass(data, controller);
-			applyBodyStyle(data, controller);
+			applyMainClass(data, controller);
+			applyMainStyle(data, controller);
 
 			if (controller.path === "/") {
 				angular.element("body").addClass("home");

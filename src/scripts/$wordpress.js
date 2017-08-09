@@ -92,7 +92,8 @@
 						content: carriedData.content || '',
 						articles_class: (carriedData.articles_class || []).concat(['articles']),
 						body_class: carriedData.body_class || data[0].body_class,
-						body_style: carriedData.body_style || data[0].body_style,
+						main_class: carriedData.main_class || data[0].main_class,
+						main_style: carriedData.main_style || data[0].main_style,
 						articles
 					};
 
@@ -111,7 +112,8 @@
 
 			if (slug === apiSettings.blogSlug) {
 				return _apiGetData("pages", {slug}).then(page=> _apiGetData("posts", {}, {
-					articles_class: page.articles_class.concat(page.articles[0].post_class),
+					body_class: page.body_class.concat(page.articles[0].body_class),
+					main_class: page.articles[0].main_class,
 					title: page.articles[0].title,
 					content: page.articles[0].excerpt
 				}));

@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main>
+<main data-off-canvas-content <?php main_class(); main_style();?>>
 	<?php wp_nav_menu(array(
 		'theme_location'  => 'main',
 		'container'       => false,
@@ -10,11 +10,7 @@
 	)); ?>
 	<?php
 		$articlesClass = [];
-		if ((is_front_page() && is_home()) || (!is_front_page() && is_home())) {
-			$articlesClass = array_merge($articlesClass, get_post_class('', get_option( 'page_for_posts' )));
-		} else {
-			$articlesClass[] = 'articles-no-intro';
-		}
+		if ((!is_front_page() && !is_home()) || (is_front_page() && !is_home())) $articlesClass[] = 'articles-no-intro';
 		$articlesClass[] = 'articles';
 		$articlesClass = implode(' ', array_unique($articlesClass));
 	?>
@@ -27,5 +23,5 @@
 			<?php get_template_part('article'); ?>
 		<?php endwhile; ?>
 	</div>
-</main>
 <?php get_footer(); ?>
+</main>
