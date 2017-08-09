@@ -1,0 +1,73 @@
+{
+  "name": "whitebolt-website",
+  "description": "Wordpress Theme for Whitebolt LTD",
+  "version": "0.0.1",
+  "private": "true",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-preset-es2015": "^6.24.1",
+    "const": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "*",
+    "gulp-clean-css": "^2.0.3",
+    "gulp-concat": "^2.6.0",
+    "gulp-debug": "^2.1.2",
+    "gulp-header": "^1.7.1",
+    "gulp-if": "^2.0.2",
+    "gulp-json-editor": "^2.2.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.2.0",
+    "gulp-sftp-new": "^0.1.8",
+    "gulp-sourcemaps": "*",
+    "gulp-uglify": "*",
+    "gulp-util": "^3.0.7"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "gulp": {
+    "deployment": {
+      "host": "moses.whitebolt",
+      "remotePath": "/var/www/whitebolt/www/whitebolt.net/wp-content/themes/whitebolt"
+    },
+    "source": {
+      "scriptsWatch": "./src/*/*.js",
+      "scripts": [
+        "./src/scripts/index.js",
+        "./src/scripts/$wbtemplates.js",
+        "./src/scripts/$animationInterval.js",
+        "./src/scripts/$wordpress.js",
+        "./src/scripts/moveOn.js",
+        "./src/scripts/resizer.js",
+        "./src/scripts/app/index.js",
+        "./src/scripts/annotateMenu/index.js",
+        "./src/scripts/wordpressLoader/index.js",
+        "./src/scripts/bootstrap.js"
+      ],
+      "stylesWatch": "./src/*/*.scss",
+      "styles": [
+        "./src/styles/index.scss"
+      ]
+    },
+    "build": {
+      "scripts": "scripts/",
+      "styles": "",
+      "styleRename": "style",
+      "cleanCss": {
+        "advanced": true,
+        "keppSpecialComments": 0,
+        "restructuring": true
+      },
+      "sass": {
+        "outputStyle": "compressed",
+        "includePaths": [
+          "./lib/foundation-sites/scss"
+        ]
+      }
+    }
+  }
+}
