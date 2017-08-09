@@ -1,0 +1,25 @@
+{
+  "name": "whitebolt-website",
+  "description": "",
+  "main": "gulpfile.js",
+  "authors": [
+    "Stephen <stephen@whitebolt.net>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./build/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation-sites": "^6.3.1",
+    "jquery": "^3.1.1",
+    "font-awesome": "^4.7.0",
+    "angular-bolt": "git@aaron.whitebolt:angular/angular-bolt.git",
+    "angular": "^1.6.4"
+  }
+}

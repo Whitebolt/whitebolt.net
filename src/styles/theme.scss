@@ -1,0 +1,141 @@
+@import "variables";
+@import "http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext";
+
+#wpadminbar {
+	display: none;
+}
+
+body, html {
+	font-size: 1rem;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+
+	font-family: "Lato";
+}
+
+body.cover-image {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+body>header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 75px;
+	text-align: center;
+	background-color: rgba($black, 0.2);
+	color: $white;
+	padding: $spacer;
+
+	nav {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-around;
+		align-items: center;
+
+		div.logo {
+			width: 20%;
+			font-size: 55px;
+			line-height: 55px;
+			margin: 0;
+		}
+
+		ul.top-menu {
+			width: 40%;
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: space-around;
+			align-items: center;
+			font-size: 1.3rem;
+			height: 55px;
+			color: $lightGrey;
+			margin: 0;
+
+			li {
+				flex-grow: 1;
+				list-style: none;
+
+				&, a, a:hover {
+					color: inherit;
+				}
+
+				&:hover, &.hover {
+					color: $white;
+					text-shadow: 2px 2px rgba($white, 0.5);
+				}
+			}
+		}
+	}
+}
+
+annotate-menu, [annotate-menu] {
+	position: absolute;
+
+	height: 60%;
+	bottom: 10%;
+	left: 10%;
+	right: 10%;
+	top: 20%;
+	width: 80%;
+
+	color: $lightGrey;
+	font-size: 1.4rem;
+	background-color: rgba($darkGrey, 0.7);
+	border-radius: $spacer;
+	padding: $spacer*2;
+	min-height: 250px;
+
+	article {
+		display: none;
+		list-style: none;
+		position: relative;
+		height: 100%;
+		width: 100%;
+
+		&.hover {
+			display: block;
+		}
+
+		.info-logos {
+			position: absolute;
+			text-align: center;
+			bottom: $spacer*2;
+
+			img {
+				margin: 1%;
+				margin-bottom: 0;
+			}
+		}
+
+		h2 {
+			color: $white;
+			text-align: center;
+			font-size: 1.6rem;
+			margin: 0;
+			margin-top: $spacer*2;
+
+			&:before, &:after {
+				content: "-";
+			}
+		}
+	}
+}
+
+main {
+	/*color: $jet;
+	left: $spacer*5;
+	padding: $spacer/2;
+	position: absolute;
+	top: $spacer*25;
+	bottom: $spacer*5;
+	width: 65%;
+	border: 1px solid $white;
+	border-radius: $spacer;
+	background-color: rgba($lightGrey, 0.9);
+	display: none;*/
+}

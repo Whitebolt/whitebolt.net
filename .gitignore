@@ -1,0 +1,9 @@
+node_modules/
+lib/
+.idea/
+scripts/
+style.css
+style.css.map
+sftp.json
+!src/scripts/
+!/src/styles/
