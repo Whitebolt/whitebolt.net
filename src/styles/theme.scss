@@ -1,5 +1,6 @@
 @import "variables";
-@import "http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext";
+@import "https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext";
+
 
 #wpadminbar {
 	display: none;
@@ -7,12 +8,43 @@
 
 body, html {
 	font-size: 1rem;
+	font-family: "Lato";
 	height: 100%;
 	margin: 0;
 	padding: 0;
 	width: 100%;
 
-	font-family: "Lato";
+	h1, h2, h3, h4, h5, h6 {
+		font-weight: $boldWeight;
+	}
+
+	h1 {
+		font-size: 2.0rem;
+		text-align: center;
+		margin-bottom: $themePadding;
+	}
+
+	h2 {
+		font-size: 1.4rem;
+	}
+
+	h3 {
+		font-size: 1.2rem;
+	}
+
+	h4 {
+		font-size: 1.1rem;
+	}
+
+	h5, h6 {
+		font-size: 1.0rem;
+	}
+
+	p.attachment {
+		float: left;
+		margin-right: $spacer*2;
+		margin-bottom: $spacer;
+	}
 }
 
 body.cover-image {
@@ -24,13 +56,15 @@ body.cover-image {
 
 body>header {
 	position: fixed;
+	z-index: 99999;
 	top: 0;
 	width: 100%;
-	height: 75px;
+	left: 0;
+	height: $headerHeight;
 	text-align: center;
-	background-color: rgba($black, 0.2);
+	background-color: rgba($black, 0.8);
 	color: $white;
-	padding: $spacer;
+	padding: $themePadding/2;
 
 	nav {
 		display: flex;
@@ -43,6 +77,14 @@ body>header {
 			font-size: 55px;
 			line-height: 55px;
 			margin: 0;
+
+			a {
+				color: inherit;
+
+				&:hover {
+					color: $lightGrey;
+				}
+			}
 		}
 
 		ul.top-menu {
@@ -74,7 +116,12 @@ body>header {
 }
 
 annotate-menu, [annotate-menu] {
+	display: none;
+}
+
+body.home annotate-menu, body.home [annotate-menu] {
 	position: absolute;
+	display: block;
 
 	height: 60%;
 	bottom: 10%;
@@ -86,8 +133,8 @@ annotate-menu, [annotate-menu] {
 	color: $lightGrey;
 	font-size: 1.4rem;
 	background-color: rgba($darkGrey, 0.7);
-	border-radius: $spacer;
-	padding: $spacer*2;
+	border-radius: $themeRadius;
+	padding: $themePadding;
 	min-height: 250px;
 
 	article {
@@ -117,7 +164,7 @@ annotate-menu, [annotate-menu] {
 			text-align: center;
 			font-size: 1.6rem;
 			margin: 0;
-			margin-top: $spacer*2;
+			margin-top: $themePadding;
 
 			&:before, &:after {
 				content: "-";
@@ -126,16 +173,36 @@ annotate-menu, [annotate-menu] {
 	}
 }
 
-main {
-	/*color: $jet;
-	left: $spacer*5;
+.articles {
+	color: $black;
+	background-color: rgba($white, 0.8);
 	padding: $spacer/2;
+	padding-top: ($headerHeight + $spacer*2);
 	position: absolute;
-	top: $spacer*25;
-	bottom: $spacer*5;
-	width: 65%;
-	border: 1px solid $white;
-	border-radius: $spacer;
-	background-color: rgba($lightGrey, 0.9);
-	display: none;*/
+	top: 0;
+	left: $themePadding;
+	right: $themePadding;
+	border-bottom-left-radius: $themeRadius;
+	border-bottom-right-radius: $themeRadius;
+
+	article {
+		margin: $themePadding;
+		font-size: 1.1rem;
+		border-top: 1px solid $darkGrey;
+		padding-top: $themePadding;
+
+		&:only-of-type {
+			border-top: none;
+			padding-top: 0;
+		}
+
+		& &.articles-no-intro {
+			border-top: none;
+			padding-top: 0;
+		}
+	}
+}
+
+body.home .articles {
+	display: none;
 }

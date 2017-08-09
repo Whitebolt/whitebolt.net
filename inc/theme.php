@@ -26,4 +26,43 @@ function split_menu($menu_html, $middle_content) {
 	array_splice($items, $balance+1, 0, '</ul>'.$middle_content.$items[0]);
 	return str_replace('<li<ul', '<ul', implode('', $items));
 }
+
+function body_style($styles=array()) {
+	$styles = apply_filters('body_style', $styles);
+	if (!empty($styles)) {
+		$html = ' style="';
+		foreach($styles as $prop => $value) $html .= $prop . ': ' . $value . ';';
+		echo $html . '"';
+	}
+	echo '';
+}
+
+function wb_get_background_image($id=null) {
+	if (is_null($id) || empty($id)) $id = get_the_ID();
+	$image_url  = get_post_meta($id, 'wpcf-background-image');
+	if (empty($image_url)) {
+		$image_url = get_theme_mod('default_background');
+	} else {
+		$image_url = array_shift($image_url);
+	}
+	return $image_url;
+}
+
+function wb_set_body_background_image($styles, $id=null) {
+	$image_url  = wb_get_background_image($id);
+	if (!empty($image_url)) $styles['background-image'] = 'url(\'' . $image_url . '\')';
+
+	return $styles;
+}
+add_filter('body_style', 'wb_set_body_background_image', 10, 2);
+
+function wb_set_body_cover_class($classes, $id=null) {
+	if (!in_array('cover-image', $classes)) {
+		$image_url = wb_get_background_image($id);
+		if (!empty($image_url)) $classes[] = 'cover-image';
+	}
+	return $classes;
+}
+add_filter('rest_api_body_classes', 'wb_set_body_cover_class', 10, 2);
+add_filter('body_class', 'wb_set_body_cover_class', 10, 2);
 ?>

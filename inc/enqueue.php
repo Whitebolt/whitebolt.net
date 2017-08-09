@@ -26,6 +26,15 @@ function wb_register_script($name, $path, $deps=array(), $version=PIY_VERSION, $
 	wp_register_script( $name, $src, $deps, $version, $footer );
 }
 
+function wb_register_template($name, $path, $deps=array(), $version=PIY_VERSION, $footer=true) {
+	$src = PIY_ANGULAR_TEMPLATE_DIR . $path;
+	if (!PIY_PAGESPEED) {
+		$src = wb_add_query_param($src, 'ModPagespeed', 'off');
+		$src = wb_add_query_param($src, 'cacheBust', (string) rand());
+	}
+	wp_register_script( $name.'.html', $src, $deps, $version, $footer );
+}
+
 function wb_enqueuer($type, $items) {
 	foreach($items as $item) {
 		if ($type == 'script') {
@@ -35,4 +44,13 @@ function wb_enqueuer($type, $items) {
 		}
 	}
 }
+
+function wb_script_loader( $tag, $handle, $src ) {
+	if (strstr($handle, '.html')) {
+		$tag = str_replace( 'text/javascript', 'angular/template', $tag );
+		$tag = str_replace( '<script', '<script id="'.$handle.'"', $tag );
+	}
+	return $tag;
+}
+add_filter( 'script_loader_tag', 'wb_script_loader', 10, 3 );
 ?>

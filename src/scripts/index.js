@@ -1,7 +1,7 @@
-(function(global){
+(function(global, moduleId, moduleIncludes){
 	"use strict";
 
 	const angular = global.angular;
+	angular.module(moduleId, moduleIncludes);
 
-	angular.module("wb", ["bolt"]);
-})(window);
+})(window, "wb", ["bolt"]);

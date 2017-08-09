@@ -1,13 +1,12 @@
-(function(global, controllerAs){
-	"use strict";
+(function(global, moduleId, controllerAs, angular=global.angular) {
 
-	const angular = global.angular;
-
-	angular.module("wb").directive(controllerAs, [
+	angular.module(moduleId).directive(controllerAs, [
 		"boltDirective",
 		"$document",
 		"$animationInterval",
 	($directive, $doc, $animationInterval)=>{
+		"use strict";
+
 		function link(scope, root, attributes, controller) {
 			$directive.link({scope, root, controller});
 
@@ -32,7 +31,7 @@
 		function menuHover(event, controller=this) {
 			if (pause(controller)) {
 				removeHover(controller);
-				controller.currentNode = angular.element(event.target).closest("article");
+				controller.currentNode = angular.element(event.target).closest("li");
 				controller.menu.each((n, item)=>{
 					if (item === controller.currentNode.get(0)) controller.currentNodeNo = n;
 				});
@@ -84,4 +83,4 @@
 			}
 		};
 	}]);
-})(window, "annotateMenu");
+})(window, "wb", "annotateMenu");
