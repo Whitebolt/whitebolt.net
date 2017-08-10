@@ -50,7 +50,7 @@ body, html {
 body .off-canvas-wrapper {
 	height: 100%;
 	width: 100%;
-	overflow: visible;
+	overflow-y: visible;
 
 	.off-canvas-content {
 		height: 100%;

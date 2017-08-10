@@ -4,6 +4,8 @@
 	const $doc = $(document);
 	const angular = global.angular;
 
+
+
 	$doc.ready(()=>{
 		$(global.document).foundation();
 
@@ -13,5 +15,8 @@
 		});
 
 		$(".top-menu li").click(()=>$("#offCanvas").foundation("close"));
+		$(global).on('changed.zf.mediaquery', ()=>{
+			if (Foundation.MediaQuery.current !== "small") $("#offCanvas").foundation("close");
+		});
 	});
 })(jQuery || $, window);
