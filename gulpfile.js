@@ -54,8 +54,8 @@ function doSass(deploy=false) {
 		.pipe(cleanCSS(config.gulp.build.cleanCss))
 		.pipe(rename(path=>{path.basename = config.gulp.build.styleRename}))
 		.pipe(sourcemaps.write('./', {
-			loadMaps: true,
-			mapFile: file=>file + '?cacheBust=' + randomString()
+			loadMaps: true
+			//mapFile: file=>file + '?cacheBust=' + randomString()
 		}))
 		.pipe(gulp.dest(config.gulp.build.styles))
 		.pipe(gulpif(deploy, sftp(config.gulp.deployment.styles)))
@@ -75,8 +75,8 @@ function doMinify(deploy=false) {
 		.pipe(sourcemaps.init({loadMaps: true}))
 		.pipe(concat((config.gulp.build.index || 'index') + '.js'))
 		.pipe(sourcemaps.write('./', {
-			loadMaps: true,
-			mapFile: file=>file + '?cacheBust=' + randomString()
+			loadMaps: true
+			//mapFile: file=>file + '?cacheBust=' + randomString()
 		}))
 		.pipe(gulp.dest(config.gulp.build.scripts))
 		.pipe(gulpif(deploy, sftp(config.gulp.deployment.scripts)))

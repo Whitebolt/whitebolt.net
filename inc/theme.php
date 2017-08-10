@@ -86,18 +86,25 @@ function wb_set_body_class_index_page($classes, $id=null) {
 			$id = get_the_ID();
 		}
 	}
-	$post = get_post($id);
 
-	if ($id === (int) get_option('page_on_front')) $classes[] = 'home';
-	if ($id) {
-		$classes[] = $post->post_type . '-template-default';
-		$classes[] = $post->post_type;
-		if ($id) $classes[] = $post->post_type . '-id-' . $id;
+	if ($id && is_single()) {
+		$post = get_post($id);
+		$type = $post->post_type;
+
+		if ($id === (int) get_option('page_on_front')) $classes[] = 'home';
+		if ($id) {
+			$classes[] = $type . '-template-default';
+			$classes[] = $type;
+			if ($id) $classes[] = $type . '-id-' . $id;
+		}
 	}
+
 	if (is_rtl()) $classes[] = 'rtl';
+
+
 	$classes = apply_filters( 'rest_api_body_classes', $classes, $id);
 
 	return array_unique($classes);
 }
-add_filter('body_class', 'wb_set_body_class_index_page', 10, 2);
+add_filter('body_class', 'wb_set_body_class_index_page', 10, 3);
 ?>

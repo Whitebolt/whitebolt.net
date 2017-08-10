@@ -17,6 +17,25 @@ function wb_add_classes_to_api() {
 		)
 	));
 
+	register_rest_field(['category'], 'body_class', array(
+		'get_callback' => function( $data ) {
+			$classes = [];
+
+			$classes[] = 'archive';
+			$classes[] = 'category';
+			$classes[] = 'category-' . $data['id'];
+			$classes[] = 'category-' . $data['slug'];
+
+			$classes = array_merge($classes, get_body_class());
+
+			return array_unique($classes);
+		},
+		'schema' => array(
+			'description' => __( 'body classes' ),
+			'type'        => 'array'
+		)
+	));
+
 	register_rest_field(['page', 'post'], 'main_style', array(
 		'get_callback' => function( $data ) {
 			$styles = [];

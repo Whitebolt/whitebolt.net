@@ -120,17 +120,18 @@
 			}
 
 			if (slugParts.length >= 1) {
-				let taxName = Object.keys(apiSettings.taxonomies).find(
-					taxName=>(apiSettings.taxonomies[taxName].base === slugBase)
+				let taxName = Object.keys(apiSettings.tax).find(
+					taxName=>(taxName === slugBase)
 				);
 				if (taxName) {
-					return _apiGet(apiSettings.taxonomies[taxName].rest).then(taxonomy=>{
+					return _apiGet(apiSettings.taxonomies[apiSettings.tax[taxName]].rest).then(taxonomy=>{
 						if (taxonomy) {
 							let tax = taxonomy.find(tax=>(tax.slug === slugMain));
 							if (tax) return _apiGetData(
 								tax._links['wp:post_type'][0].href, {}, {
 									title: tax.name,
-									content: tax.description
+									content: tax.description,
+									body_class: tax.body_class
 								}
 							);
 						}
