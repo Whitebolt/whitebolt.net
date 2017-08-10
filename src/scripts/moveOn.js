@@ -45,7 +45,7 @@
 
 		function moveContent(moveToRef, moveOnTarget) {
 			let moveTo = $(moveToRef);
-			if (moveTo.length) moveTo.prepend(moveOnTarget);
+			if (moveTo.length) moveTo.append(moveOnTarget);
 		}
 
 		function doMove(event, size, oldSize) {
@@ -75,7 +75,7 @@
 		}
 
 		$(global).on('changed.zf.mediaquery', doMove);
-		doMove(undefined, Foundation.MediaQuery.current, undefined);
+		$(document).ready(()=>doMove(undefined, Foundation.MediaQuery.current, undefined));
 	}
 
 	$.fn.piyMoveOn = applyMoveOn;

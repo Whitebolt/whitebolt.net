@@ -22,7 +22,7 @@
 </head>
 
 <body <?php body_class();?>>
-<header move-on-medium="body" move-on-large="body" move-on-xlarge="body" move-on-xxlarge="body">
+<header>
 	<nav class="row" move-on-small="#off-canvas-content" move-on-small-target="ul">
 		<?php
 		echo split_menu(wp_nav_menu(array(
@@ -43,9 +43,7 @@
 <div class="off-canvas-wrapper">
 	<div class="off-canvas position-left" id="offCanvas" data-off-canvas>
 		<div id="off-canvas-content">
-			<?php if (!is_front_page()) { ?>
-				<ul class="top-menu"><li><a href="<?php echo get_home_url(); ?>">Home</a></li></ul>
-			<?php } ?>
+			<ul class="top-menu home-menu-item"><li><a href="<?php echo get_home_url(); ?>">Home</a></li></ul>
 		</div>
 	</div>
 

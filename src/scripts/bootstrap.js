@@ -11,5 +11,7 @@
 			const appName = $(appNode).attr("app");
 			angular.bootstrap(appNode, [appName]);
 		});
+
+		$(".top-menu li").click(()=>$("#offCanvas").foundation("close"));
 	});
 })(jQuery || $, window);
