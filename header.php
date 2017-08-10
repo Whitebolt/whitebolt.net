@@ -43,7 +43,9 @@
 <div class="off-canvas-wrapper">
 	<div class="off-canvas position-left" id="offCanvas" data-off-canvas>
 		<div id="off-canvas-content">
-			<ul class="top-menu home-menu-item"><li><a href="<?php echo get_home_url(); ?>">Home</a></li></ul>
+			<ul class="top-menu home-menu-item">
+				<li class="no-annotation"><a href="<?php echo get_home_url(); ?>">Home</a></li>
+			</ul>
 		</div>
 	</div>
 

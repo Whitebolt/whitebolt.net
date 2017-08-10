@@ -19,6 +19,8 @@
 			let _nextMenuItem = nextMenuItem.bind(controller);
 			_nextMenuItem.period = (controller.period ? (parseFloat(controller.period) * 1000) : 5000);
 			$animationInterval.add(_nextMenuItem);
+
+			scope.$watch(()=>root.is(":visible"), visible=>onVisible(visible, controller));
 		}
 
 		function incNode(controller=this) {
@@ -29,7 +31,7 @@
 		}
 
 		function menuHover(event, controller=this) {
-			if (pause(controller)) {
+			if (controller.visible && pause(controller)) {
 				removeHover(controller);
 				controller.currentNode = angular.element(event.target).closest("li");
 				controller.menu.each((n, item)=>{
@@ -37,6 +39,18 @@
 				});
 				setHover(controller);
 				setInfo(controller);
+			}
+		}
+
+		function onVisible(visible, controller=this) {
+			if (!visible) {
+				controller.paused = true;
+				controller.visible = false;
+				removeHover(controller);
+			} else {
+				controller.paused = false;
+				controller.visible = true;
+				setHover(controller);
 			}
 		}
 
@@ -69,6 +83,7 @@
 		function annotateMenuSliderController() {
 			let controller = this;
 			controller.paused = false;
+			controller.visible = true;
 		}
 
 		return {
