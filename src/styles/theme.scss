@@ -47,6 +47,34 @@ body, html {
 	}
 }
 
+.bronze {
+	color: $bronze;
+	text-shadow: rgba($bronze, 0.5) 1px 1px;
+}
+
+.silver {
+	color: $silver;
+	text-shadow: rgba($silver, 0.5) 1px 1px;
+}
+
+.gold {
+	color: $gold;
+	text-shadow: rgba($gold, 0.5) 1px 1px;
+}
+
+.platinum {
+	color: $platinum;
+	text-shadow: rgba($platinum, 0.5) 1px 1px;
+}
+
+.center {
+	text-align: center;
+}
+
+.justify {
+	text-align: justify;
+}
+
 body .off-canvas-wrapper {
 	height: 100%;
 	width: 100%;

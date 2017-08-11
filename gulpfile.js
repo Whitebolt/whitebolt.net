@@ -93,7 +93,7 @@ function doMinify(deploy=false) {
 }
 
 gulp.task('minify', ()=>doMinify());
-gulp.task('minify-deply', ()=>doMinify(true));
+gulp.task('minify-deploy', ()=>doMinify(true));
 gulp.task('sass', ()=>doSass());
 gulp.task('sass-deploy', ()=>doSass(true));
 
