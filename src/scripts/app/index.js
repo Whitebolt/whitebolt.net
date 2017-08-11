@@ -9,12 +9,14 @@
 		"$compile",
 		"$wbtemplates",
 		"$interpolate",
-	($doc, $bolt, $directive, $wordpress, $location, $compile, $templates, $interpolate)=>{
+		"$timeout",
+	($doc, $bolt, $directive, $wordpress, $location, $compile, $templates, $interpolate, $timeout)=>{
 		"use strict";
 
 		function link(scope, root, attributes, controller) {
 			$directive.link({scope, root, controller});
 			watchPath(controller);
+			applyInnerHeight(controller);
 		}
 
 		function watchPath(controller=this) {
@@ -84,6 +86,15 @@
 			controller.pageTitle.html(title);
 		}
 
+		function applyInnerHeight(controller) {
+			$timeout(()=>{
+				let articles = angular.element(".articles");
+				let height = articles.height() + controller.spacer;
+				let docHeight = angular.element(global).height();
+				controller.wrapper.height(((docHeight>height) || !articles.is(":visible"))?docHeight:height);
+			});
+		}
+
 		function applyPage(data, controller) {
 			if (controller.current) controller.current.$destroy();
 			controller.current = controller.parent.$new();
@@ -94,6 +105,7 @@
 			applyBodyClass(data, controller);
 			applyMainClass(data, controller);
 			applyMainStyle(data, controller);
+			applyInnerHeight(controller);
 
 			if (controller.path === "/") {
 				angular.element("body").addClass("home");
@@ -105,7 +117,9 @@
 		function appController() {
 			let controller = this;
 
+			controller.spacer = parseInt(angular.element(".articles").css('padding-top'), 10) + angular.element("body>header").height();
 			controller.path = $location.path();
+			controller.wrapper = angular.element(".off-canvas-wrapper");
 		}
 
 		return {
