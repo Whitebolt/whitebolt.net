@@ -107,4 +107,11 @@ function wb_set_body_class_index_page($classes, $id=null) {
 	return array_unique($classes);
 }
 add_filter('body_class', 'wb_set_body_class_index_page', 10, 3);
+
+function wb_add_svg_to_upload_mimes( $upload_mimes ) {
+	$upload_mimes['svg'] = 'image/svg+xml';
+	$upload_mimes['svgz'] = 'image/svg+xml';
+	return $upload_mimes;
+}
+add_filter('upload_mimes', 'wb_add_svg_to_upload_mimes', 10, 1 );
 ?>

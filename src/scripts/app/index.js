@@ -17,6 +17,7 @@
 			$directive.link({scope, root, controller});
 			watchPath(controller);
 			applyInnerHeight(controller);
+			angular.element(global).resize(()=>applyInnerHeight(controller));
 		}
 
 		function watchPath(controller=this) {
@@ -92,7 +93,8 @@
 				let height = articles.height() + controller.spacer;
 				let docHeight = angular.element(global).height();
 				controller.wrapper.height(((docHeight>height) || !articles.is(":visible"))?docHeight:height);
-			});
+				angular.element("html, body").animate({scrollTop: "0px"}, 800);
+			}, 400);
 		}
 
 		function applyPage(data, controller) {
